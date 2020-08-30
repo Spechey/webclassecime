@@ -9,7 +9,7 @@ function helpers_listEpreuves()
 		echo "<li class='".$class."'><a href='?evs=".$evs->id."'>".$evs->data["Nom"]."</a></li>";
 	}
 }
-function helpers_tableLine($datas,$cols=array(),$balise="td")
+function helpers_tableLine($datas,$cols=array(),$balise="td",$ext="")
 {
 	$r ="<tr>";
 	if (sizeof($cols) == 0)
@@ -18,6 +18,6 @@ function helpers_tableLine($datas,$cols=array(),$balise="td")
 	{
 		$r .= "<".$balise.">".$datas[$cols[$i]]."</".$balise.">";
 	}
-	$r .="</tr>";
+	$r .= $ext."</tr>";
 	return $r;
 }

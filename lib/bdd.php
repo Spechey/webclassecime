@@ -18,6 +18,8 @@ class classecime
 				if (!isset($this->mother))
 					$this->mother = new $property($this->id);
 				return $this->mother;
+			case "Code_manche":
+				return (isset($this->ids["Code_manche"]))?$this->ids["Code_manche"]:1;				
 			default:
 				return $this->$property;
 		}
