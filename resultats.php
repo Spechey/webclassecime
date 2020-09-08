@@ -1,5 +1,6 @@
 <?php
 include_once("lib/conf.php");
+include_once("lib/auth.php");
 ?>
 <html>
 <head>

@@ -42,6 +42,11 @@ include_once("../lib/conf.php");
 					foreach($epss as $eps)
 					{
 						echo '<a class="dropdown-item" href="?evs='.$evs->id.'&eps='.$eps->id.'" id="navbarDropdown" role="button">'.(($eps->data["Code_categorie"] == "*")?"Scratch":$eps->data["Code_categorie"]).' ('.(($eps->data["Sexe"]=="T")?"Mixte":$eps->data["Sexe"]).')</a>';
+						if (!isset($_GET["eps"]))
+						{
+							$_GET["evs"] = $evs->id;
+							$_GET["eps"] = $eps->id;
+						}
 					}
 			}
 			?>
@@ -74,6 +79,8 @@ include_once("../lib/conf.php");
 		?></div></div><?php
 		}// fin else
 	}
+	if (isset($_GET["mch"]))
+	{
 	$mchs = new Manche($_GET["mch"]);
 	// les filtres
 	?><div class="btn-group">
@@ -94,7 +101,7 @@ include_once("../lib/conf.php");
 				echo '<a class="dropdown-item" href="?evs='.$_GET["evs"]."&eps=".$_GET["eps"]."&mch=".$mchs->id."&filterName=".$filter_name."&filterValue=".urlencode($filter_values[$i]).'" id="navbarDropdown" role="button">'.(($filter_values[$i])?$filter_values[$i]:"[sans indication]").' </a>';				
 			}
 		}	
-	?></div></div>
+	?></div></div><?php } ?>
 	
 	</div>
 	<!--<div class="form-inline my-2 my-lg-0" >
@@ -107,6 +114,7 @@ include_once("../lib/conf.php");
 
 </script>
 <div id="result" class="container-fluid">
+<?php if (isset($_GET["mch"])) { ?>
 <div id="header">
 <h1><?=(new Evenement($_GET["evs"]))->data["Nom"] ?></h1>
 <h2><?php 
@@ -184,6 +192,7 @@ if (isset($_GET["mch"]))
 
 ?>
 </div>
+<?php } ?>
 </div>
 </body>
 </html>

@@ -26,6 +26,8 @@ $coureurDetailsHeaders = array(
 		"Nation",
 		"Club",
 		"Categ",
-	);	
+	);
+$login = "rtg";
+$password = "rtg";
 include_once("helpers.php");
 include_once("actions.php");	

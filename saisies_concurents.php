@@ -1,5 +1,6 @@
 <?php
 include_once("lib/conf.php");
+include_once("lib/auth.php");
 if (isset($_GET["evs"]) && isset($_GET["dos"]) && $_GET["dos"] != "")
 {
 	$c = new Coureur($_GET["evs"]."-".$_GET["dos"]);
