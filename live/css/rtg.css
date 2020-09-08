@@ -1,0 +1,301 @@
+    .blocs-result {
+		padding-right: 7rem;
+	}
+  .bloc-result {
+		display: inline-block;
+		width:1.5rem;
+		text-align: center;
+		vertical-align:middle;
+		font-size: 0.5em;
+	}
+	.bloc-result div {
+		margin: 1px;
+	}
+	.bloc-id {
+		font-weight: bold;
+	}
+	.bloc-top {
+		display: block;
+		height: 1.3rem;
+		border: 1px solid #AAA;
+	}
+	.bloc-bonus {
+		display: block;
+		height: 0.9rem;
+		border: 1px solid #AAA;
+	}
+	.bloc-valid
+	{
+		background-color: #F25649;
+		color: #FFF;
+	}
+body {
+	background-image: url(https://www.pepsup.com/resources/images/CLUBS/000/000/292/2928/IMAGE/background.png?1560252768876);
+	background-attachment: fixed;
+}
+nav {
+	background-image: url(https://www.pepsup.com/resources/images/CLUBS/000/000/292/2928/IMAGE/PHOTO/3541/22133.jpg);
+	background-repeat: no-repeat;
+	background-size: 3rem 3rem;
+	background-position-x: 10px;
+	background-position-Y: 5px;
+	
+}
+
+
+li.list-group-item.concurent{
+	background-color: rgba(255,255,255,.95);
+	padding: 5px 1rem;
+}
+.scores span, .top span{
+	font-size: 0.7rem;
+	float: right;
+	padding-right: 0.7em;
+}
+
+    .scores {
+		text-align: center;
+		vertical-align:middle;
+		margin-right: 0rem;
+		border-radius: 0.5rem;
+		width: 5em;
+		height: 1.5em;
+		font-size: 1.5rem;
+        line-height: 1.4em;
+		background-color: #FF9B08;
+		color: #FFF;
+		margin-top: 5px;
+		float:right;
+	}
+.scores .top{
+	text-align: center;
+		vertical-align:middle;
+		margin-right: 0rem;
+		border-radius: 0.5rem;
+		width: 5em;
+		height: 1.5em;
+		font-size: 1.5rem;
+        line-height: 1.4em;
+		background-color: #F25649;
+		color: #FFF;
+		margin-top: 5px;
+		float:right;
+	
+}
+.perf {
+		text-align: center;
+		vertical-align:middle;
+		margin-right: 0rem;
+		border: none;
+		border-radius: 0.5rem;
+		width: 3em;
+		background-color: #FF9B08;
+		color: #FFF;
+    padding: 0;
+		float:right;
+		font-size: 1.8rem;
+    line-height: 2em;
+	
+	}
+.perf hr {
+	margin:0;
+	padding:0; 
+	color: #fff;
+	background-color: #FFF;
+}
+.perf div {
+	margin:0;
+	padding:0;
+	height: 1.5em;
+	font-size: 2.5rem;
+  line-height: 1em;
+  
+}
+.perf div.zone {
+	height: 2em;
+	font-size: 1.5rem;
+}
+	.perf .essai
+	{
+		display:none;/*display: inline-block;*/
+		font-size: 1.2rem;
+		margin: 1rem 0 2rem 1rem;
+		background-color: #fff;
+		
+		color: #000;
+		width:  1rem;
+		line-height: 0rem;
+		position: absolute;
+		right:1rem;
+		border-radius: 50% 0 0 50%;
+		padding: .7em 1rem 1rem .5rem;
+	}
+.perf .zone .essai
+	{
+		margin-top: 0.5rem;
+}
+	.concurent .order{
+		text-align: center;
+		vertical-align:middle;
+		margin-right: 1rem;
+		border: 1px solid #9C7A2C;
+		border-radius: 1rem;
+		width: 2em;
+		height: 2em;
+		font-size: 2rem;
+    line-height: 1.9em;
+		background-color: #9C7A2C;
+		color: #FFF;
+		margin-top: 5px;	
+	}
+	.concurent span{
+		vertical-align:middle;
+		display: inline-block;
+	}
+	.concurent .sexe{
+		width: 10%;
+	}
+	.concurent .categ{
+		width: 10%;
+	}	
+	.concurent .identity{
+		width: 30%;
+		font-size: 1.6em;
+		vertical-align: middle;
+		float: left;
+		line-height: 2em;
+		padding-bottom: 2rem;
+	}
+	.concurent .club{
+		width: 30%;
+		text-align: right;
+	}
+
+	
+
+@media only screen and (min-width: 1200px) {
+
+	#header {
+			background-image: url(https://www.pepsup.com/resources/images/CLUBS/000/000/292/2928/IMAGE/banner.png?1560252768000);
+			background-repeat: no-repeat;
+			background-size: 100%;
+			padding-top: 18%;
+		
+	}
+	#header H1, #header H2{
+    background-color: rgba(255,255,255,0.8);
+		padding: 0.3em;
+		border-radius: .4rem;
+		margin-top: -17%;
+	  }
+	  #message {
+			background-color: rgba(255,255,255,0.8);
+			padding: 0.1em;
+			margin: 0.1em;
+			border-radius: .4rem;
+			font-size: 1.1rem;
+			text-align: center;
+	  }
+	.navbar-brand {
+		margin-left:3rem;
+	}
+}
+
+@media only screen and (max-width: 900px) {
+
+
+.container{
+	max-width: 100% !important;
+}
+	.concurent .order{
+		margin-top: 10px;
+		border-radius: 0.5rem;
+		width: 3.3rem;
+		height: 2rem;
+		font-size: 2rem;
+    line-height: 0.9em;
+	}	
+   .concurent .identity{
+		font-size: 1em;
+		line-height: 1em;
+		padding-bottom: 0;
+		 float:none;
+		 width: 50%;
+	 }
+		.concurent span{
+		display: inline-block;
+		font-size: 1em ;
+		line-height: 1em ;
+		padding-bottom: 0 ;
+				
+			}
+	.concurent .sexe{
+		width: 5%;
+	}
+	.concurent .categ{
+		display: none;
+	}	
+	.concurent .club{
+		width: 70%;
+		text-align: left;
+	}			
+.perf {
+		font-size: 1rem;
+    line-height: .9em;
+	
+	}
+.perf div {
+	height: 1.5em;
+	font-size: 1.2rem;
+  line-height: 0.9em;
+  font-weight: bold;
+}
+.perf div.zone {
+	height: 1em;
+	font-size: 1.1rem;
+}
+.perf .zone .essai
+	{
+		margin-top: 0.5rem;
+}
+
+	.scores span, .top span{
+	font-size: 0.7rem;
+	float: right;
+	padding-right: 0.7em;
+}
+
+    .scores {
+		width: 5em;
+		height: 1.4em;
+		font-size: 1.2rem;
+        line-height: 1.4em;
+
+	}
+.scores .top{
+		width: 5em;
+		height: 1.2em;
+		font-size: 1rem;
+    line-height: 1em;
+
+}
+
+    .blocs-result {
+		padding-right: 5rem;
+	}
+		
+}
+@media only screen and (max-width: 500px) {
+	#header H1 { font-size: 1.2rem ;}
+	#header H2 { font-size: 0.8rem ;}
+	#header H3 { font-size: 0.5rem ;}
+   .concurent .identity{
+		 width: 50%;
+	 }	
+	 .concurent .sexe {
+		 display:none;
+	 }
+	.blocs-result {
+		padding-right: 3rem;
+	}
+}

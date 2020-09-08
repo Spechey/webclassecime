@@ -130,8 +130,15 @@ table.bck td.isValide:nth-child(even), table.resultats  td.isValide:nth-child(ev
 	background-color: #0F7A;
 }
 table.bck td.isValide:nth-child(odd), table.resultats  td.isValide:nth-child(odd) {
-	background-color: #0F8A;
+	background-color: #0F85;
 }
+
+table.bck td.notValide:nth-child(odd) {
+	background-color: #F005;
+}
+
+
+
 th.pts {
 	font-weight : normal;
 	font-size: small;

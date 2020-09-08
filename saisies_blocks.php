@@ -23,6 +23,7 @@ if (isset($_GET["evs"]))
 <form>
 <input type="hidden" name="evs" value="<?=@$_GET["evs"]?>"/>
 Block n°<input type="integer" name="block" value="<?=@$_GET["block"]?>" />
+<input type="submit">
 </form>
 
 <?php
@@ -73,6 +74,9 @@ if (isset($_GET["mch"]) && isset($_GET["block"]))
 			$cBck = $cBckList[$b];
 			
 			$action = "<td class='cBck-".$cBck->id." action ".$cBck->isValideString()."'><a onclick=\"cBck_update('cBck-".$cBck->id."','".(($cBck->isValide())?"cBckDel":"cBckAdd")."','".$cBck->id."')\">".(($cBck->isValide())?"-":"+")."</a></td>";
+			$action .= "<td>".$c->data["Dossard"]."</td>";
+			
+			
 			echo helpers_tableLine($c->data,$coureurListHeaders,"td",$action);
 		}
 		echo "</table>";
