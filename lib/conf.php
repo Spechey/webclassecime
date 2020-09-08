@@ -1,9 +1,21 @@
 <?php
 include_once("bdd.php");
 
-$dbbfile="D:\\RTG\\ClassCimes\\base\\ffme.db3";
-if (!is_file($dbbfile))
-	$dbbfile="bdd/ffme.db3";
+// fichier de demo
+$dbbfile="bdd/ffme.db3";
+
+// fichier trouver sur le disque
+if (is_file("C:\\Program Files\\ClassCimes\\base\\ffme.db3"))
+	$dbbfile="C:\\Program Files\\ClassCimes\\base\\ffme.db3";
+
+// fichier trouver sur le disque
+if (is_file("C:\\Program Files (x86)\\ClassCimes\\base\\ffme.db3"))
+	$dbbfile="C:\\Program Files (x86)\\ClassCimes\\base\\ffme.db3";
+
+// fichier trouver sur le disque
+if (is_file("D:\\RTG\\ClassCimes\\base\\ffme.db3"))
+	$dbbfile="D:\\RTG\\ClassCimes\\base\\ffme.db3";
+
 
 classecime::$bdd = new SQLite3($dbbfile);
 $cc = new classecime();

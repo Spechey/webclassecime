@@ -10,4 +10,8 @@
 <a href="saisies_concurents.php" target="saisies_concurents">Saisies fiches concurents</a>
 <br/>
 <a href="saisies_blocks.php" target="saisies_blocks">Saisies fiches blocks</a>
+<pre>
+<?php
+@print_r(system("ipconfig"));
+?>
 </body>
