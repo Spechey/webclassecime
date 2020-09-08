@@ -41,7 +41,7 @@ include_once("../lib/conf.php");
 					$epss = $evs->getEpreuves();
 					foreach($epss as $eps)
 					{
-						echo '<a class="dropdown-item" href="?evs='.$evs->id.'&eps='.$eps->id.'" id="navbarDropdown" role="button">'.$eps->data["Code_categorie"].' ('.$eps->data["Sexe"].')</a>';
+						echo '<a class="dropdown-item" href="?evs='.$evs->id.'&eps='.$eps->id.'" id="navbarDropdown" role="button">'.(($eps->data["Code_categorie"] == "*")?"Scratch":$eps->data["Code_categorie"]).' ('.(($eps->data["Sexe"]=="T")?"Mixte":$eps->data["Sexe"]).')</a>';
 					}
 			}
 			?>
@@ -97,16 +97,32 @@ include_once("../lib/conf.php");
 	?></div></div>
 	
 	</div>
-	<div class="form-inline my-2 my-lg-0" >
+	<!--<div class="form-inline my-2 my-lg-0" >
       <input id="search" name="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="search" onKeyPress="doFilter();">
 	  <button class="btn btn-outline-success my-2 my-sm-0" onClick="clearFilter();">Effacer</button>
-    </div>
+    </div>-->
   </div>
 </nav>
 <script type="text/javascript">
 
 </script>
 <div id="result" class="container-fluid">
+<div id="header">
+<h1><?=(new Evenement($_GET["evs"]))->data["Nom"] ?></h1>
+<h2><?php 
+$ep = new Epreuve($_GET["eps"]);
+echo (($ep->data["Code_categorie"] == "*")?"Scratch":$ep->data["Code_categorie"]).' ('.(($ep->data["Sexe"]=="T")?"Mixte":$ep->data["Sexe"]).")";
+
+if (isset($_GET["filterName"]) && isset($_GET["filterValue"]))
+{
+	echo '</h2><h2><button class="btn btn-warning"><b>Filtre</b> '.$_GET["filterName"]." : ".$_GET["filterValue"]."</button></h2>";
+}
+
+?>
+
+</h2>
+<div id="message"><b>Résultats et scores à titre informatif !!</b></div>
+</div>
  <div class="container list-group">
 <?php
 

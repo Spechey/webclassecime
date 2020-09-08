@@ -179,14 +179,17 @@ li.list-group-item.concurent{
 			background-image: url(https://www.pepsup.com/resources/images/CLUBS/000/000/292/2928/IMAGE/banner.png?1560252768000);
 			background-repeat: no-repeat;
 			background-size: 100%;
-			padding-top: 18%;
-		
+			
+			background-position: left;
+			background-size: auto;
+			background-color: #A07E29;			
 	}
 	#header H1, #header H2{
     background-color: rgba(255,255,255,0.8);
 		padding: 0.3em;
 		border-radius: .4rem;
-		margin-top: -17%;
+		width: 30%;
+		margin-left: auto;
 	  }
 	  #message {
 			background-color: rgba(255,255,255,0.8);
