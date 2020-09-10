@@ -39,6 +39,13 @@ $coureurDetailsHeaders = array(
 		"Club",
 		"Categ",
 	);
+$coureurListByBlocHeaders = array(
+		"Categ",
+		"Club",
+		"Nom",
+		"Prenom",
+		"Dossard",		
+	);	
 $login = "rtg";
 $password = "rtg";
 include_once("helpers.php");

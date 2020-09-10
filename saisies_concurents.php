@@ -96,7 +96,7 @@ if (isset($c))
 	{
 		
 		echo "<h2>Manche ".$rm->data["Code_manche"]."</h2>";
-		var_dump($rm);
+
 		$rs = $c->getResultat($rm->data["Code_manche"]);
 		$r0 = $r1 = $r2 = "";
 
