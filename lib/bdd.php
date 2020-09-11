@@ -161,12 +161,13 @@ class Manche extends classecime
 		$this->filters[] = array("name"=>addslashes ($k), "value"=>addslashes ($v)); 
 		
 	}
-	function getFiltersValues($names=array("Categ","Sexe","Club","Dept","Ligue"))
+	function getFiltersValues($names=array("Categ","Sexe","Club","Dept","Ligue","Certificat_Medical"))
 	{
 		$filters = array();
 		for ($i=0;$i<sizeof($names);$i++)
 		{
 			$filters[$names[$i]] = $this->getFilter($names[$i]);
+			$filters[$names[$i]][] = "*";
 		}
 		return $filters;
 	}
@@ -227,10 +228,15 @@ class Manche extends classecime
 
 		for($i=0;$i<sizeof($this->filters);$i++)
 		{
-			$val = ($this->filters[$i]["value"])?" = '".$this->filters[$i]["value"]."'":"is NULL";
-			$filter .= " AND ".$this->filters[$i]["name"]." $val";
+			
+			if ($this->filters[$i]["value"] == "*")
+				$filter .= " AND ".$this->filters[$i]["name"]." != ''";
+			else
+			{
+				$val = ($this->filters[$i]["value"])?" = '".$this->filters[$i]["value"]."'":"is NULL";
+				$filter .= " AND ".$this->filters[$i]["name"]." $val";
+			}
 		}
-
 		$q = "SELECT *,GROUP_CONCAT( (Resultat_Manche.Code_manche - ".$this->data["Code_niveau"]."000) ) as Blocs
 							FROM resultat
 							LEFT JOIN Resultat_Manche ON resultat.Code_evenement = Resultat_Manche.Code_evenement

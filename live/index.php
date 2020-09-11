@@ -89,7 +89,7 @@ include_once("../lib/conf.php");
 		</button>
 		<div class="dropdown-menu" aria-labelledby="navbarDropdown"><?php	
 				echo '<a class="dropdown-item" href="?evs='.$_GET["evs"]."&eps=".$_GET["eps"]."&mch=".$mchs->id.'" id="navbarDropdown" role="button">Supprimer le filtre</a>';				
-		$filters = $mchs->getFiltersValues();
+		$filters = $mchs->getFiltersValues($liveFilterValues);
 		foreach($filters as $filter_name => $filter_values)
 		{
 			echo "<p class=\"btn-warning\">$filter_name</p>";
@@ -98,7 +98,7 @@ include_once("../lib/conf.php");
 				if ($filter_values[$i] == null)
 					$filter_values[$i] = "";
 
-				echo '<a class="dropdown-item" href="?evs='.$_GET["evs"]."&eps=".$_GET["eps"]."&mch=".$mchs->id."&filterName=".$filter_name."&filterValue=".urlencode($filter_values[$i]).'" id="navbarDropdown" role="button">'.(($filter_values[$i])?$filter_values[$i]:"[sans indication]").' </a>';				
+				echo '<a class="dropdown-item" href="?evs='.$_GET["evs"]."&eps=".$_GET["eps"]."&mch=".$mchs->id."&filterName=".$filter_name."&filterValue=".urlencode($filter_values[$i]).'" id="navbarDropdown" role="button">'.(($filter_values[$i])?(($filter_values[$i]=="*")?"[Toutes mentions]":$filter_values[$i]):"[Sans mention]").' </a>';				
 			}
 		}	
 	?></div></div><?php } ?>

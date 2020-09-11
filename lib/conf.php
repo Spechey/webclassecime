@@ -19,6 +19,21 @@ if (is_file("D:\\RTG\\ClassCimes\\base\\ffme.db3"))
 
 classecime::$bdd = new SQLite3($dbbfile);
 $cc = new classecime();
+$coureurResultHeaders = array(
+		"Classement",
+		"Code_coureur",
+		"Dossard",
+		"Nom",
+		"Prenom",
+		"Sexe",
+		"Nation",
+		"Club",
+		"Categ",
+		"Certificat_Medical",
+		"Total blocs",
+		"Total points",
+	);
+
 $coureurListHeaders = array(
 		"Code_coureur",
 		"Dossard",
@@ -28,6 +43,7 @@ $coureurListHeaders = array(
 		"Nation",
 		"Club",
 		"Categ",
+		"Certificat_Medical",
 	);
 $coureurDetailsHeaders = array(
 		"Code_coureur",
@@ -46,6 +62,11 @@ $coureurListByBlocHeaders = array(
 		"Prenom",
 		"Dossard",		
 	);	
+	
+	
+$liveFilterValues = array("Categ","Sexe","Club","Dept","Ligue");
+$saisieFilterValues = array("Categ","Sexe","Club","Dept","Ligue","Certificat_Medical");
+
 $login = "rtg";
 $password = "rtg";
 include_once("helpers.php");

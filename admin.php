@@ -5,7 +5,9 @@
 <body>
 <a href="live">Live</a>
 <br/>
-<a href="resultats.php" target="resulats">Resultats</a>
+<a href="resultats.php" target="resulats">Resultats - contrôle</a>
+<br/>
+<a href="saisies_resultats.php" target="resulats">Resultats - saisies</a>
 <br/>
 <a href="saisies_concurents.php" target="saisies_concurents">Saisies fiches concurents</a>
 <br/>

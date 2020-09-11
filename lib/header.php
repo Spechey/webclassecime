@@ -144,4 +144,7 @@ th.pts {
 	font-size: small;
 	background-color: #EEF;
 }
+td.btnSaisie {
+	width: 2em;
+}
 </style>
