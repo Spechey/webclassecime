@@ -5,12 +5,9 @@ include_once("bdd.php");
 $dbbfile="bdd/ffme.db3";
 
 // fichier trouver sur le disque
-if (is_file("C:\\Program Files\\ClassCimes\\base\\ffme.db3"))
-	$dbbfile="C:\\Program Files\\ClassCimes\\base\\ffme.db3";
+if (is_file("C:\\ClassCimes\\base\\ffme.db3"))
+	$dbbfile="C:\\ClassCimes\\base\\ffme.db3";
 
-// fichier trouver sur le disque
-if (is_file("C:\\Program Files (x86)\\ClassCimes\\base\\ffme.db3"))
-	$dbbfile="C:\\Program Files (x86)\\ClassCimes\\base\\ffme.db3";
 
 // fichier trouver sur le disque
 if (is_file("D:\\RTG\\ClassCimes\\base\\ffme.db3"))
@@ -19,6 +16,7 @@ if (is_file("D:\\RTG\\ClassCimes\\base\\ffme.db3"))
 
 classecime::$bdd = new SQLite3($dbbfile);
 $cc = new classecime();
+//saisie par grimpeur
 $coureurResultHeaders = array(
 		"Classement",
 		"Code_coureur",
@@ -26,7 +24,7 @@ $coureurResultHeaders = array(
 		"Nom",
 		"Prenom",
 		"Sexe",
-		"Nation",
+		//"Nation",
 		"Club",
 		"Categ",
 		"Certificat_Medical",
@@ -40,11 +38,13 @@ $coureurListHeaders = array(
 		"Nom",
 		"Prenom",
 		"Sexe",
-		"Nation",
+		//"Nation",
 		"Club",
 		"Categ",
 		"Certificat_Medical",
 	);
+
+//saisie par bloc
 $coureurDetailsHeaders = array(
 		"Code_coureur",
 		"Dossard",

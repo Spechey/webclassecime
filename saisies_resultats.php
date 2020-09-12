@@ -52,7 +52,7 @@ if (isset($_GET["mch"]))
 		$mchs = new Manche($_GET["mch"]);
 	
 		$bps = $mchs->getPointsBlocs();
-		
+
 		
 		$filters = $mchs->getFiltersValues($saisieFilterValues);
 		echo "<div class='headerActions'><h2>Filtre(s)</h2>";
@@ -143,6 +143,7 @@ if (isset($_GET["mch"]))
 			foreach($bps as $b => $p)
 			{
 				//var_dump($c);
+				
 				if (isset($c->data["BlocsInfos"]["Details"]))
 				{
 						$cBck =	new CoureurBlock (array(

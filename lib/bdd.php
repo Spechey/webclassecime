@@ -300,10 +300,11 @@ class Manche extends classecime
 		}
 		for ($i=1;$i<=$this->getNbVoies();$i++)
 		{
+			
 			if (!isset($pointsBlocs[$i]))
 				$pointsBlocs[$i] = 1000;
-				
 		}
+		ksort($pointsBlocs);
 		return $pointsBlocs;
 	}
 	function getNbVoies()
@@ -421,6 +422,8 @@ class Coureur extends classecime
 			$rsParse[$bckId] = $r->data["Status"];
 		}
 		$return = array();
+		
+
 		foreach($manchePts as $bckId => $pt)
 		{
 			
