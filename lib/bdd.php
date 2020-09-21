@@ -249,15 +249,16 @@ class Manche extends classecime
 										group by resultat.code_coureur";
 		$q = str_replace("\'","''",$q);
 		
+		
 		$byC = $this->getObj($q,"Resultat");
 				
 		$return = array();
 		foreach($byC as $e)
 		{
-			$blocs_num = $e->getBlocsNum();
 			$blocs_infos = array();
 			$total_pt = 0;
 			$total_blocs = 0;
+			$blocs_num = $e->getBlocsNum();
 			for ($i=0;$i<sizeof($blocs_num);$i++)
 			{
 				$blocs_infos[$blocs_num[$i]] = $bp[$blocs_num[$i]];
@@ -273,6 +274,8 @@ class Manche extends classecime
 
 		// tri !!
 		usort($return,"sortBlocsDescResult" );
+		$coureursClasses = array();
+		$lastClassement = 0;
 		for($i=0;$i<sizeof($return);$i++)
 		{
 			if ($i>0 
@@ -280,7 +283,39 @@ class Manche extends classecime
 				$return[$i]->data["Classement"] = $return[($i-1)]->data["Classement"];
 			else
 				$return[$i]->data["Classement"] = ($i+1);
+			
+			$lastClassement = $return[$i]->data["Classement"];
+			// on cache les coureurs classés
+			$coureursClasses[$return[$i]->data["Code_coureur"]] = true;
 		}
+		
+		
+		// on ajoute les concurent qui n'ont rien validé.
+		$coureurs = $this->getObj("select *, '".$this->data["Code_niveau"]."000' as Code_manche  from resultat
+										where Code_evenement = '".$this->data["Code_evenement"]."'
+										order by Dossard","Resultat");
+		foreach($coureurs as $e)
+		{
+			
+			// si ce n'est pas un courreur classé
+			if (!isset($coureursClasses[$e->data["Code_coureur"]]))
+		    {
+				$blocs_infos = array();
+				$blocs_num = $e->getBlocsNum();
+				for ($i=0;$i<sizeof($blocs_num);$i++)
+				{
+					$blocs_infos[$blocs_num[$i]] = 0;
+				}
+				$e->setBlocsInfos(array("TotalBlocs" => 0,
+									"TotalPoints"=> 0,
+									"Details"    => $blocs_infos));
+									
+				$e->data["Classement"] = $lastClassement +1;
+				// on l'ajoute à la liste.
+				$return[] = $e;
+			}
+		}
+		
 		
 		
 		return $return;
