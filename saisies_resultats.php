@@ -60,19 +60,41 @@ if (isset($_GET["mch"]))
 		{
 			echo "<ul class=filter><lI>$filter_name</li><ul>";
 			
+			$filterOtherParams="";
+			if (isset($_GET["filter"]))
+			{
+				reset($_GET["filter"]);
+				foreach($_GET["filter"] as $name => $value)
+				{
+					if ($name != $filter_name)
+						$filterOtherParams .= "&filter[".$name."]=".urlencode($value);
+				}
+			}
+			
 			for($i=0;$i<sizeof($filter_values);$i++)
 			{
 				if ($filter_values[$i] == null)
 					$filter_values[$i] = "";
+				$isSelected = (isset($_GET["filter"]) 
+								&& isset($_GET["filter"][$filter_name]) 
+								&& $_GET["filter"][$filter_name] == $filter_values[$i]);
+
+				$filterParams = $filterOtherParams;
+				if (!$isSelected)
+					$filterParams .= "&filter[".$filter_name."]=".urlencode($filter_values[$i]);
 				
-				echo "<li class='".((isset($_GET["filterValue"]) && $_GET["filterValue"] == $filter_values[$i] && isset($_GET["filterName"]) && $_GET["filterName"] == $filter_name)?"active":"")."'><a href='?evs=".$_GET["evs"]."&eps=".$_GET["eps"]."&mch=".$mchs->id."&filterName=".$filter_name."&filterValue=".urlencode($filter_values[$i])."' >".(($filter_values[$i])?(($filter_values[$i]=="*")?"[Avec]":$filter_values[$i]):"[Sans]")."</a></li>";
+				echo "<li class='".(($isSelected)?"active":"")."'><a href='?evs=".$_GET["evs"]."&eps=".$_GET["eps"]."&mch=".$mchs->id.$filterParams."' >".(($filter_values[$i])?(($filter_values[$i]=="*")?"[Avec]":$filter_values[$i]):"[Sans]")."</a></li>";
 			}
 			echo "</ul></ul>";
 		}
 		
-		if (isset($_GET["filterName"]) && isset($_GET["filterValue"]))
+		if (isset($_GET["filter"]))
 		{
-			$mchs->addFilter($_GET["filterName"],$_GET["filterValue"]);
+			reset($_GET["filter"]);
+			foreach($_GET["filter"] as $name => $value)
+			{
+				$mchs->addFilter($name,$value);
+			}
 		}
 		echo "</div>";
 

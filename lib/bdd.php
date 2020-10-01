@@ -293,6 +293,7 @@ class Manche extends classecime
 		// on ajoute les concurent qui n'ont rien validé.
 		$coureurs = $this->getObj("select *, '".$this->data["Code_niveau"]."000' as Code_manche  from resultat
 										where Code_evenement = '".$this->data["Code_evenement"]."'
+										".$filter."
 										order by Dossard","Resultat");
 		foreach($coureurs as $e)
 		{

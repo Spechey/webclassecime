@@ -92,13 +92,34 @@ include_once("../lib/conf.php");
 		$filters = $mchs->getFiltersValues($liveFilterValues);
 		foreach($filters as $filter_name => $filter_values)
 		{
+			
+
+			$filterOtherParams="";
+			if (isset($_GET["filter"]))
+			{
+				reset($_GET["filter"]);
+				foreach($_GET["filter"] as $name => $value)
+				{
+					if ($name != $filter_name)
+						$filterOtherParams .= "&filter[".$name."]=".urlencode($value);
+				}
+			}
+			
+			
 			echo "<p class=\"btn-warning\">$filter_name</p>";
 			for($i=0;$i<sizeof($filter_values);$i++)
 			{
 				if ($filter_values[$i] == null)
 					$filter_values[$i] = "";
+				$isSelected = (isset($_GET["filter"]) 
+								&& isset($_GET["filter"][$filter_name]) 
+								&& $_GET["filter"][$filter_name] == $filter_values[$i]);
 
-				echo '<a class="dropdown-item" href="?evs='.$_GET["evs"]."&eps=".$_GET["eps"]."&mch=".$mchs->id."&filterName=".$filter_name."&filterValue=".urlencode($filter_values[$i]).'" id="navbarDropdown" role="button">'.(($filter_values[$i])?(($filter_values[$i]=="*")?"[Toutes mentions]":$filter_values[$i]):"[Sans mention]").' </a>';				
+				$filterParams = $filterOtherParams;
+				if (!$isSelected)
+					$filterParams .= "&filter[".$filter_name."]=".urlencode($filter_values[$i]);
+
+				echo '<a class="dropdown-item '.(($isSelected)?"active":"").'" href="?evs='.$_GET["evs"]."&eps=".$_GET["eps"]."&mch=".$mchs->id.$filterParams.'" id="navbarDropdown" role="button">'.(($filter_values[$i])?(($filter_values[$i]=="*")?"[Toutes mentions]":$filter_values[$i]):"[Sans mention]").' </a>';				
 			}
 		}	
 	?></div></div><?php } ?>
@@ -120,15 +141,28 @@ include_once("../lib/conf.php");
 <h2><?php 
 $ep = new Epreuve($_GET["eps"]);
 echo (($ep->data["Code_categorie"] == "*")?"Scratch":$ep->data["Code_categorie"]).' ('.(($ep->data["Sexe"]=="T")?"Mixte":$ep->data["Sexe"]).")";
-
-if (isset($_GET["filterName"]) && isset($_GET["filterValue"]))
+?>
+</h2>
+<?php
+if (isset($_GET["filter"]))
 {
-	echo '</h2><h2><button class="btn btn-warning"><b>Filtre</b> '.$_GET["filterName"]." : ".$_GET["filterValue"]."</button></h2>";
+	echo "<h2>";
+	reset($_GET["filter"]);
+	foreach($_GET["filter"] as $name => $value)
+	{	
+		$filterOtherParams="";
+		foreach($_GET["filter"] as $name2 => $value2)
+		{
+			if ($name2 != $name)
+				$filterOtherParams .= "&filter[".$name2."]=".urlencode($value2);
+		}
+		echo '<a class="btn btn-warning" href="?evs='.$_GET["evs"]."&eps=".$_GET["eps"]."&mch=".$mchs->id.$filterOtherParams.'">&#10060; '.$name." : ".$value."</a>&#160;";
+	}
+	echo "</h2>";
 }
 
 ?>
 
-</h2>
 <div id="message"><b>Résultats et scores à titre informatif !!</b></div>
 </div>
  <div class="container list-group">
@@ -139,11 +173,14 @@ if (isset($_GET["mch"]))
 {
 		$mchs = new Manche($_GET["mch"]);
 		$bps = $mchs->getPointsBlocs();
-		if (isset($_GET["filterName"]) && isset($_GET["filterValue"]))
+		if (isset($_GET["filter"]))
 		{
-			$mchs->addFilter($_GET["filterName"],$_GET["filterValue"]);
+			reset($_GET["filter"]);
+			foreach($_GET["filter"] as $name => $value)
+			{
+				$mchs->addFilter($name,$value);
+			}
 		}
-
 		
 		
 		
