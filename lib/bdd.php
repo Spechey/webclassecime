@@ -173,13 +173,19 @@ class Manche extends classecime
 	}
 	function getFilter($filterCol)
 	{
+		
 		$r = array();
-		$q = "select distinct $filterCol as filter_values from Resultat_Manche, resultat 
+
+		$q = "select distinct $filterCol as filter_values from resultat
+										where Code_evenement = '".$this->data["Code_evenement"]."'";		
+		
+		
+		/*$q = "select distinct $filterCol as filter_values from Resultat_Manche, resultat 
 										where resultat.Code_coureur = Resultat_Manche.Code_coureur 
 										and Resultat_Manche.Code_evenement = '".$this->data["Code_evenement"]."'
 										and Resultat_Manche.Code_manche > ".$this->data["Code_niveau"]."000
 										and Resultat_Manche.Code_manche < ".$this->data["Code_niveau"]."999";
-		
+		*/
 		$rs = self::$bdd->query($q);
 		while($e = $rs->fetchArray(SQLITE3_ASSOC))
 		{
