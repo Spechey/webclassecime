@@ -88,7 +88,7 @@ include_once("../lib/conf.php");
 			Filtres
 		</button>
 		<div class="dropdown-menu" aria-labelledby="navbarDropdown"><?php	
-				echo '<a class="dropdown-item" href="?evs='.$_GET["evs"]."&eps=".$_GET["eps"]."&mch=".$mchs->id.'" id="navbarDropdown" role="button">Supprimer le filtre</a>';				
+				echo '<a class="dropdown-item" href="?evs='.$_GET["evs"]."&eps=".$_GET["eps"]."&mch=".$mchs->id.'" id="navbarDropdown" role="button">Supprimer le(s) filtre(s)</a>';				
 		$filters = $mchs->getFiltersValues($liveFilterValues);
 		foreach($filters as $filter_name => $filter_values)
 		{
@@ -138,11 +138,12 @@ include_once("../lib/conf.php");
 <?php if (isset($_GET["mch"])) { ?>
 <div id="header">
 <h1><?=(new Evenement($_GET["evs"]))->data["Nom"] ?></h1>
-<h2><?php 
+<?php 
 $ep = new Epreuve($_GET["eps"]);
-echo (($ep->data["Code_categorie"] == "*")?"Scratch":$ep->data["Code_categorie"]).' ('.(($ep->data["Sexe"]=="T")?"Mixte":$ep->data["Sexe"]).")";
+$t = (($ep->data["Code_categorie"] == "*")?"":$ep->data["Code_categorie"]).' '.(($ep->data["Sexe"]=="T")?"":"(".$ep->data["Sexe"].")");
+if (trim($t) != "")
+	echo "<h2>$t</h2>";
 ?>
-</h2>
 <?php
 if (isset($_GET["filter"]))
 {
