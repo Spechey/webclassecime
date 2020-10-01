@@ -4,6 +4,7 @@ class classecime
 	static $sep = "-";
 	static $bdd;
 	static $bddCode = array();
+	static $FiltresRecalculPoints = false;
 	
 	
     public function __get($property)
@@ -200,30 +201,9 @@ class Manche extends classecime
 										and Code_manche > ".$this->data["Code_niveau"]."000
 										and Code_manche < ".$this->data["Code_niveau"]."999","Resultat");
 	}
-	function getResultatsByCoureurs()
+	function getSqlFilter()
 	{
-		$bp = $this->getPointsBlocs();
 		$filter = "";
-		/*
-		$byC = $this->getObj("select code_coureur,GROUP_CONCAT( (Code_manche - ".$this->data["Code_niveau"]."000) ) as Blocs from Resultat_Manche 
-										where Code_evenement = '".$this->data["Code_evenement"]."'
-										and Code_manche > ".$this->data["Code_niveau"]."000
-										and Code_manche < ".$this->data["Code_niveau"]."999
-										group by code_coureur","Resultat");
-				
-		if ($this->data["Categ"] != "*")
-				echo "<th>".$c->data["Categ"]." ".$c->data["Sexe"]."</th>";
-*/
-/*
-		if ($this->mother->data["Code_categorie"] != '*')
-			$filter .= " AND Resultat.Categ = '".$this->mother->data["Code_categorie"]."'";
-		if ($this->mother->data["Sexe"] != 'T')
-			$filter .= " AND Resultat.Sexe = '".$this->mother->data["Sexe"]."'";
-		if (isset($this->mother->data["Distance"]) && $this->mother->data["Distance"] != null)
-			$filter .= " AND Resultat.Groupe = '".$this->mother->data["Distance"]."'";
-*/
-
-
 		if ($this->Epreuve->data["Code_categorie"] != '*')
 			$filter .= " AND Resultat.Categ = '".$this->Epreuve->data["Code_categorie"]."'";
 		if ($this->Epreuve->data["Sexe"] != 'T')
@@ -243,6 +223,14 @@ class Manche extends classecime
 				$filter .= " AND ".$this->filters[$i]["name"]." $val";
 			}
 		}
+		return $filter;
+	}
+	function getResultatsByCoureurs()
+	{
+		$bp = $this->getPointsBlocs();
+		$filter = $this->getSqlFilter();
+
+
 		$q = "SELECT *,GROUP_CONCAT( (Resultat_Manche.Code_manche - ".$this->data["Code_niveau"]."000) ) as Blocs
 							FROM resultat
 							LEFT JOIN Resultat_Manche ON resultat.Code_evenement = Resultat_Manche.Code_evenement
@@ -330,11 +318,20 @@ class Manche extends classecime
 	function getPointsBlocs()
 	{
 		$pointsBlocs = array();
-		$rs =self::$bdd->query("select (Code_manche - ".$this->data["Code_niveau"]."000) as Bloc, ROUND(CAST(1000 AS float) / CAST (count(*) AS float),2)  as Points from Resultat_Manche 
-										where Code_evenement = '".$this->data["Code_evenement"]."'
-										and Code_manche > ".$this->data["Code_niveau"]."000
-										and Code_manche < ".$this->data["Code_niveau"]."999
-										group by Code_manche");
+		
+		$filter = (classecime::$FiltresRecalculPoints)?$this->getSqlFilter():"";
+		$q = "select (Resultat_Manche.Code_manche - ".$this->data["Code_niveau"]."000) as Bloc, ROUND(CAST(1000 AS float) / CAST (count(*) AS float),2)  as Points 
+										from Resultat_Manche 
+										LEFT JOIN Resultat ON resultat.Code_evenement = Resultat_Manche.Code_evenement
+														AND resultat.code_coureur = Resultat_Manche.code_coureur										
+										where Resultat_Manche.Code_evenement = '".$this->data["Code_evenement"]."'
+										and Resultat_Manche.Code_manche > ".$this->data["Code_niveau"]."000
+										and Resultat_Manche.Code_manche < ".$this->data["Code_niveau"]."999
+										".$filter."
+										group by Resultat_Manche.Code_manche";
+
+		$rs =self::$bdd->query($q);
+		
 
 		while($e = $rs->fetchArray(SQLITE3_ASSOC))
 		{
