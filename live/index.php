@@ -173,7 +173,7 @@ if (isset($_GET["filter"]))
 if (isset($_GET["mch"]))
 {
 		$mchs = new Manche($_GET["mch"]);
-		$bps = $mchs->getPointsBlocs();
+		
 		if (isset($_GET["filter"]))
 		{
 			reset($_GET["filter"]);
@@ -182,7 +182,7 @@ if (isset($_GET["mch"]))
 				$mchs->addFilter($name,$value);
 			}
 		}
-		
+		$bps = $mchs->getPointsBlocs();
 		
 		
 
