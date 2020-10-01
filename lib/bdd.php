@@ -331,7 +331,6 @@ class Manche extends classecime
 										group by Resultat_Manche.Code_manche";
 
 		$rs =self::$bdd->query($q);
-		
 
 		while($e = $rs->fetchArray(SQLITE3_ASSOC))
 		{

@@ -51,6 +51,16 @@ if (isset($_GET["mch"]))
 {
 		$mchs = new Manche($_GET["mch"]);
 	
+	
+		if (isset($_GET["filter"]))
+		{
+			reset($_GET["filter"]);
+			foreach($_GET["filter"] as $name => $value)
+			{
+				$mchs->addFilter($name,$value);
+			}
+		}	
+	
 		$bps = $mchs->getPointsBlocs();
 
 		
@@ -88,14 +98,7 @@ if (isset($_GET["mch"]))
 			echo "</ul></ul>";
 		}
 		
-		if (isset($_GET["filter"]))
-		{
-			reset($_GET["filter"]);
-			foreach($_GET["filter"] as $name => $value)
-			{
-				$mchs->addFilter($name,$value);
-			}
-		}
+
 		echo "</div>";
 
 		echo "<table class=resultats>";
