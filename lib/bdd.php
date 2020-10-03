@@ -315,11 +315,11 @@ class Manche extends classecime
 		
 		return $return;
 	}
-	function getPointsBlocs()
+	function getPointsBlocs($filter=true)
 	{
 		$pointsBlocs = array();
 		
-		$filter = (classecime::$FiltresRecalculPoints)?$this->getSqlFilter():"";
+		$filter = ($filter && classecime::$FiltresRecalculPoints)?$this->getSqlFilter():"";
 		$q = "select (Resultat_Manche.Code_manche - ".$this->data["Code_niveau"]."000) as Bloc, ROUND(CAST(1000 AS float) / CAST (count(*) AS float),2)  as Points 
 										from Resultat_Manche 
 										LEFT JOIN Resultat ON resultat.Code_evenement = Resultat_Manche.Code_evenement
@@ -441,7 +441,7 @@ class Coureur extends classecime
 	function getResultat($manche=1)
 	{
 		$mancheObj = new Manche(0,array("Code_evenement"=>$this->data["Code_evenement"],"Code_niveau" => $manche));
-		$manchePts = $mancheObj->getPointsBlocs();
+		$manchePts = $mancheObj->getPointsBlocs(false);
 		
 		$q = "SELECT * FROM Resultat_Manche 
 					   WHERE Code_evenement = '".$this->data["Code_evenement"]."'
