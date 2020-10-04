@@ -2,7 +2,7 @@
 include_once("lib/conf.php");
 include_once("lib/auth.php");
 if(!isset($saisie))
-	$saisie=true;
+	$saisie=false;
 ?>
 <html>
 <head>
@@ -63,6 +63,9 @@ if (isset($_GET["mch"]))
 	
 		$bps = $mchs->getPointsBlocs();
 
+		// Lien d'impression
+		echo "<div style='position:absolute; top:0; right:0; background-color: #FAA; padding: 1em;'><a target=_blank href='print_resultats.php?".$_SERVER['QUERY_STRING']."'>[Impression]</a></div>";
+		
 		
 		$filters = $mchs->getFiltersValues($saisieFilterValues);
 		echo "<div class='headerActions'><h2>Filtre(s)</h2>";
@@ -97,8 +100,7 @@ if (isset($_GET["mch"]))
 			}
 			echo "</ul></ul>";
 		}
-		
-
+	
 		echo "</div>";
 
 		echo "<table class=resultats>";

@@ -35,7 +35,17 @@ $coureurResultHeaders = array(
 		"Total blocs",
 		"Total points",
 	);
-
+$coureurResultPrintHeaders = array(
+		"Classement",
+		"Dossard",
+		"Nom",
+		"Prenom",
+		"Sexe",
+		"Club",
+		"Categ",
+		"Total blocs",
+		"Total points",
+	);
 $coureurListHeaders = array(
 		"Code_coureur",
 		"Dossard",
@@ -47,7 +57,7 @@ $coureurListHeaders = array(
 		"Categ",
 		"Certificat_Medical",
 	);
-
+ 
 //saisie par bloc
 $coureurDetailsHeaders = array(
 		"Code_coureur",
