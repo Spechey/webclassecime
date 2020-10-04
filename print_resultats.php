@@ -14,6 +14,7 @@ $printBlock=false;
 if (isset($_GET["evs"]))
 {
 	$evs = new Evenement($_GET["evs"]);
+	echo "<h1>".$evs->data["Nom"]."</h1>";
 }
 
 if (isset($_GET["eps"]))
@@ -24,16 +25,20 @@ if (isset($_GET["eps"]))
 if (isset($_GET["mch"]))
 {
 		$mchs = new Manche($_GET["mch"]);
-	
-	
+		$h2 = array();
 		if (isset($_GET["filter"]))
 		{
 			reset($_GET["filter"]);
 			foreach($_GET["filter"] as $name => $value)
 			{
 				$mchs->addFilter($name,$value);
+				if (true || !isset($coureurResultPrintHeaders) || in_array($name,$coureurResultPrintHeaders))
+				{
+					$h2[] = $value;
+				}
 			}
 		}	
+		echo "<h2>".implode($h2," - ")."</h2>";
 	
 		$bps = $mchs->getPointsBlocs();
 
