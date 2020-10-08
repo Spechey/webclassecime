@@ -81,6 +81,8 @@ $coureurListByBlocHeaders = array(
 $liveFilterValues = array("Categ","Sexe","Club","Dept","Ligue");
 $saisieFilterValues = array("Categ","Sexe","Club","Dept","Ligue","Certificat_Medical");
 
+$liveRefreshseconde=30;
+
 $login = "rtg";
 $password = "rtg";
 include_once("helpers.php");

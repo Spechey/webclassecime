@@ -14,7 +14,7 @@ include_once("../lib/conf.php");
 	<script   src="../js/jquery-3.4.1.min.js"></script>	
 	<script src="../bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-
+		setTimeout(function(){ window.location.reload() }, <?=$liveRefreshseconde*1000?>);
 	</script>
 	
 </head>
@@ -164,7 +164,7 @@ if (isset($_GET["filter"]))
 
 ?>
 
-<div id="message"><b>Résultats et scores à titre informatif !!</b></div>
+<div id="message"><b>Résultats et scores à titre informatif.</b></div>
 </div>
  <div class="container list-group">
 <?php
