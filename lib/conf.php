@@ -19,6 +19,14 @@ $cc = new classecime();
 
 // faire recalculer les points en foonction des filtres (oui : true, non: false)
 classecime::$FiltresRecalculPoints = true;
+// point par blocs
+classecime::$blocsPoints = 500;
+
+/* gestion des zones*/
+$modulo = 2;
+$suffixModulo[0] = " Top";
+$suffixModulo[1] = " Zone";
+
 
 //saisie par grimpeur
 $coureurResultHeaders = array(
@@ -82,6 +90,7 @@ $liveFilterValues = array("Categ","Sexe","Club","Dept","Ligue");
 $saisieFilterValues = array("Categ","Sexe","Club","Dept","Ligue","Certificat_Medical");
 
 $liveRefreshseconde=30;
+
 
 $login = "rtg";
 $password = "rtg";

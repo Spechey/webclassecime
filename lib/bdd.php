@@ -5,7 +5,7 @@ class classecime
 	static $bdd;
 	static $bddCode = array();
 	static $FiltresRecalculPoints = false;
-	
+	static $blocsPoints = 1000;
 	
     public function __get($property)
     {
@@ -320,7 +320,7 @@ class Manche extends classecime
 		$pointsBlocs = array();
 		
 		$filter = ($filter && classecime::$FiltresRecalculPoints)?$this->getSqlFilter():"";
-		$q = "select (Resultat_Manche.Code_manche - ".$this->data["Code_niveau"]."000) as Bloc, ROUND(CAST(1000 AS float) / CAST (count(*) AS float),2)  as Points 
+		$q = "select (Resultat_Manche.Code_manche - ".$this->data["Code_niveau"]."000) as Bloc, ROUND(CAST(".classecime::$blocsPoints." AS float) / CAST (count(*) AS float),2)  as Points 
 										from Resultat_Manche 
 										LEFT JOIN Resultat ON resultat.Code_evenement = Resultat_Manche.Code_evenement
 														AND resultat.code_coureur = Resultat_Manche.code_coureur										
@@ -340,7 +340,7 @@ class Manche extends classecime
 		{
 			
 			if (!isset($pointsBlocs[$i]))
-				$pointsBlocs[$i] = 1000;
+				$pointsBlocs[$i] = classecime::$blocsPoints;
 		}
 		ksort($pointsBlocs);
 		return $pointsBlocs;
