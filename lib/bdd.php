@@ -503,26 +503,27 @@ class CoureurBlock extends classecime
 	}	
 	function setValide($b,$retry=0)
 	{
-		$q = "delete from Resultat_Manche 
-					where Code_evenement = '".$this->ids["Code_evenement"]."'  
-									and Code_coureur='".$this->ids["Code_coureur"]."'
-									and Code_manche='".$this->ids["Code_manche"]."'";
-		self::$bdd->query($q);			
+		try {
+			$q = "delete from Resultat_Manche 
+						where Code_evenement = '".$this->ids["Code_evenement"]."'  
+										and Code_coureur='".$this->ids["Code_coureur"]."'
+										and Code_manche='".$this->ids["Code_manche"]."'";
+			self::$bdd->query($q);			
 
-		if ($b)
-		{
-				$q = "insert into Resultat_Manche (Code_evenement,Code_coureur,Code_manche,Rang,Heure_depart,Status,PtsClt)
-							Values('".$this->ids["Code_evenement"]."','".$this->ids["Code_coureur"]."','".$this->ids["Code_manche"]."',null,0,'O',0)";
-				try {
-					@self::$bdd->query($q);
-				} catch(Exception $e) {
-					if ($retry > 100)
-						die($e->getMessage());
-					// sleep();
-					$this->setValide($b,$retry++);
-				}
+			if ($b)
+			{
+					$q = "insert into Resultat_Manche (Code_evenement,Code_coureur,Code_manche,Rang,Heure_depart,Status,PtsClt)
+								Values('".$this->ids["Code_evenement"]."','".$this->ids["Code_coureur"]."','".$this->ids["Code_manche"]."',null,0,'O',0)";
+					
+						@self::$bdd->query($q);
+					
+			}
+		} catch(Exception $e) {
+			if ($retry > 100)
+				die($e->getMessage());
+			// sleep();
+			$this->setValide($b,$retry++);
 		}
- 
 	}
 }
 

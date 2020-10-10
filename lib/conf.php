@@ -15,6 +15,7 @@ if (is_file("D:\\RTG\\ClassCimes\\base\\ffme.db3"))
 
 
 classecime::$bdd = new SQLite3($dbbfile);
+classecime::$bdd->enableExceptions(true);
 $cc = new classecime();
 
 // faire recalculer les points en foonction des filtres (oui : true, non: false)
