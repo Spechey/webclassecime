@@ -55,7 +55,7 @@ $coureurResultPrintHeaders = array(
 		"Sexe",
 		"Club",
 		"Categ",
-		"Total blocs",
+		//"Total blocs",
 		"Total points",
 	);
 $coureurListHeaders = array(
