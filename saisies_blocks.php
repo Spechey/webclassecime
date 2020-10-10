@@ -46,7 +46,7 @@ if (isset($_GET["mch"]) && isset($_GET["block"]))
 			{
 				$nbloc = $b_init[$i] * 2 - $j;
 				$b[]      = $nbloc;
-				$titres[] = $i."\n".$suffixModulo[($modulo-1-$j)]["titre"]."\n($nbloc)";
+				$titres[] = "<i>".$b_init[$i]."</i>\n".$suffixModulo[($modulo-1-$j)]["titre"]."\n($nbloc)";
 			}
 		}
 		
@@ -64,7 +64,7 @@ if (isset($_GET["mch"]) && isset($_GET["block"]))
 				$coureurListByBlocHeaders = array_keys($cs[0]->data);
 		$hB = "";
 		for ($i=0;$i<sizeof($b);$i++)
-			$hB .= "<th>Block n°".nl2br($titres[$i])."</th>";
+			$hB .= "<th>".nl2br($titres[$i])."</th>";
 			
 		echo helpers_tableLine($coureurListByBlocHeaders,array(),"th",$hB);
 		$jsactions = array();

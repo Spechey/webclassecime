@@ -105,7 +105,7 @@ table.bck {
 table.bck td {
 	border: none;
     
-    width: 30px;
+    width: 40px;
 }
 
 table.bck .id{
@@ -149,5 +149,8 @@ td.btnSaisie {
 }
 th.admin-block-result i{
 	font-size: 2em;
+}
+th i, td i{
+	font-size: 1.4em;
 }
 </style>

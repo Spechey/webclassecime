@@ -98,15 +98,21 @@ if (isset($c))
 		echo "<h2>Manche ".$rm->data["Code_manche"]."</h2>";
 
 		$rs = $c->getResultat($rm->data["Code_manche"]);
-		$r0 = $r1 = $r2 = "";
+		$r = array();
 
 		foreach($rs as $bckId => $cBck)
 		{
-			$r0 .= "<td class='cBck-".$cBck->id." id ".$cBck->isValideString()."'>".$bckId."</td>";
-			$r1 .= "<td class='cBck-".$cBck->id." pts ".$cBck->isValideString()."'>".$cBck->getPts()."pts</td>";
-			$r2 .= "<td class='cBck-".$cBck->id." action ".$cBck->isValideString()."'><a onclick=\"cBck_update('cBck-".$cBck->id."','".(($cBck->isValide())?"cBckDel":"cBckAdd")."','".$cBck->id."')\" href__='?".http_build_query($_GET)."&action=".(($cBck->isValide())?"cBckDel":"cBckAdd")."&actionid=".$cBck->id."'>".(($cBck->isValide())?"-":"+")."</a></td>";
+			$m = ($bckId +1) % $modulo;
+			$bn = floor(($bckId+1) / $modulo);
+			
+				@$r[3+(($m+1)*3)] .= "<td class='cBck-".$cBck->id." id ".$cBck->isValideString()."'><i>".$bn."</i>&#160;".$suffixModulo[$m]["initial"]."</td>";
+				@$r[2+(($m+1)*3)] .= "<td class='cBck-".$cBck->id." pts ".$cBck->isValideString()."'>".$cBck->getPts()."pts</td>";
+				@$r[1+(($m+1)*3)] .= "<td class='cBck-".$cBck->id." action ".$cBck->isValideString()."'><a onclick=\"cBck_update('cBck-".$cBck->id."','".(($cBck->isValide())?"cBckDel":"cBckAdd")."','".$cBck->id."')\" href__='?".http_build_query($_GET)."&action=".(($cBck->isValide())?"cBckDel":"cBckAdd")."&actionid=".$cBck->id."'>".(($cBck->isValide())?"-":"+")."</a></td>";
+				
 		}			
-		echo "<table class=bck><tr>$r0</tr><tr>$r1</tr><tr>$r2</tr></table>";
+		ksort($r);
+		$r = array_reverse($r);
+		echo "<table class=bck><tr>".implode("</tr><tr>",$r)."</tr></table>";
 
 	}
 	
