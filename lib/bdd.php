@@ -284,7 +284,7 @@ class Manche extends classecime
 		for($i=0;$i<sizeof($return);$i++)
 		{
 			if ($i>0 
-				&& $return[$i]->data["BlocsInfos"]["TotalPoints"] ==  $return[($i-1)]->data["BlocsInfos"]["TotalPoints"])
+				&& round($return[$i]->data["BlocsInfos"]["TotalPoints"],2) ==  round($return[($i-1)]->data["BlocsInfos"]["TotalPoints"],2))
 				$return[$i]->data["Classement"] = $return[($i-1)]->data["Classement"];
 			else
 				$return[$i]->data["Classement"] = ($i+1);
