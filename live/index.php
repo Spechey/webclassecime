@@ -203,6 +203,7 @@ if (isset($_GET["mch"]))
 			reset($bps);
 			foreach($bps as $b => $p)
 			{
+				// gestion modulo
 				$m = ($b-1) % $modulo;
 				//echo "<li>$b => ".$m;
 				if (isset($c->data["BlocsInfos"]["Details"]))

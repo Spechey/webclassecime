@@ -118,27 +118,18 @@ if (isset($_GET["mch"]))
 		
 		
 		echo helpers_tableCels($coureurResultHeaders,array(),"th","rowspan=2");
-			/*echo "<th rowspan=2>Classement</th>";			
-			echo "<th rowspan=2>n°</th>";
-			echo "<th rowspan=2>Nom</th>";
-			echo "<th rowspan=2>Club</th>";
-			echo "<th rowspan=2>Categorie</th>";
-			echo "<th rowspan=2>Groupe</th>";
-			echo "<th rowspan=2>Total blocs</th>";
-			echo "<th rowspan=2>Total points</th>";*/
 		
 		$l1 = "";
 		$l2 = "";
 		foreach($bps as $b => $p)
 		{
-			$l1 .=  "<th>n°$b</th>";
+			$m = ($b + 1) % $modulo;
+			$bn = floor(($b + 1) / 2);
+			$l1 .=  "<th class=admin-block-result>n°&#160;<i>$bn</i><br/>".$suffixModulo[$m]["titre"]."</th>";
 			$l2 .=  "<th class='pts'>$p pts</th>";
 			
 		}
 		echo $l1."</tr><tr>".$l2."</tr>";
-		
-		
-		
 		
 		
 		//print_r($mchs->getResultats());
@@ -148,18 +139,7 @@ if (isset($_GET["mch"]))
 
 			
 			echo "<tr>";
-			
-			/*
-			echo "<th>".$c->data["Classement"]."</th>";
-			echo "<th><a name='".$c->data["Code_coureur"]."'>".$c->data["Code_coureur"]."</a></th>";
-			echo "<th>".$c->data["Nom"]." ".$c->data["Prenom"]."</th>";
-			echo "<th>".$c->data["Club"]."</th>";
-			echo "<th>".$c->data["Categ"]." ".$c->data["Sexe"]."</th>";
-			echo "<th>".$c->data["Groupe"]."</th>";
-			echo "<th>".$c->data["BlocsInfos"]["TotalBlocs"]."</th>";
-			echo "<th>".$c->data["BlocsInfos"]["TotalPoints"]."</th>";
-			*/
-			
+				
 			$c->data["Total blocs"] = $c->data["BlocsInfos"]["TotalBlocs"];
 			$c->data["Total points"] = $c->data["BlocsInfos"]["TotalPoints"];
 			
@@ -169,7 +149,7 @@ if (isset($_GET["mch"]))
 			reset($bps);
 			foreach($bps as $b => $p)
 			{
-				//var_dump($c);
+
 				
 				if (isset($c->data["BlocsInfos"]["Details"]))
 				{

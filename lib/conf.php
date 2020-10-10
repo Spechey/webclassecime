@@ -24,11 +24,11 @@ classecime::$blocsPoints = 500;
 
 /* gestion des zones*/
 $modulo = 2;
-$suffixModulo[1]["titre"]       = " Top";
+$suffixModulo[1]["titre"]       = "Top";
 $suffixModulo[1]["initial"]     = "T";
 $suffixModulo[1]["class"]       = "bloc-top";
-$suffixModulo[0]["titre"]       = " Zone";
-$suffixModulo[0]["initial"]     = "Z";
+$suffixModulo[0]["titre"]       = "Bonus";
+$suffixModulo[0]["initial"]     = "B";
 $suffixModulo[0]["class"]       = "bloc-bonus";
 
 

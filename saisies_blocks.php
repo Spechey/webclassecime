@@ -35,15 +35,27 @@ Block n°<input type="integer" name="block" value="<?=@$_GET["block"]?>" />
 if (isset($_GET["mch"]) && isset($_GET["block"]))
 {
 	
-		$b=explode(",",$_GET["block"]);
+		$b_init=explode(",",$_GET["block"]);
+		
+		// gestion du modulo
+		$b = array();
+		for ($i=0;$i<sizeof($b_init);$i++)
+		{
+			for ($j=($modulo-1);$j>=0;$j--)
+			//for ($j=0;$j<$modulo;$j++)
+			{
+				$nbloc = $b_init[$i] * 2 - $j;
+				$b[]      = $nbloc;
+				$titres[] = $i."\n".$suffixModulo[($modulo-1-$j)]["titre"]."\n($nbloc)";
+			}
+		}
+		
 		
 		$mchs = new Manche($_GET["mch"]);
 	
 		$bps = $mchs->getPointsBlocs();
 		
-		
-		
-		echo "<h1>Block n° ".implode(" - n°",$b)."</h1><table class=resultats>";
+		echo "<h1>Block(s) n° ".implode(" - n° ",$b_init)."</h1><table class=resultats>";
 
 		
 		
@@ -52,9 +64,10 @@ if (isset($_GET["mch"]) && isset($_GET["block"]))
 				$coureurListByBlocHeaders = array_keys($cs[0]->data);
 		$hB = "";
 		for ($i=0;$i<sizeof($b);$i++)
-			$hB .= "<th>Block n°".$b[$i]."</th>";
+			$hB .= "<th>Block n°".nl2br($titres[$i])."</th>";
 			
 		echo helpers_tableLine($coureurListByBlocHeaders,array(),"th",$hB);
+		$jsactions = array();
 		foreach($cs as $c)
 		{
 		
@@ -79,7 +92,12 @@ if (isset($_GET["mch"]) && isset($_GET["block"]))
 				
 				$cBck = $cBckList[$b[$i]];
 				
-				$action .= "<td class='cBck-".$cBck->id." action ".$cBck->isValideString()."'><a onclick=\"cBck_update('cBck-".$cBck->id."','".(($cBck->isValide())?"cBckDel":"cBckAdd")."','".$cBck->id."')\">".(($cBck->isValide())?"-":"+")."</a></td>";
+				$m = ($b[$i]+1) % $modulo;
+				//if ($m==0)
+					$jsactions = array();				
+				$jsactions[] = "cBck_update('cBck-".$cBck->id."','".(($cBck->isValide())?"cBckDel":"cBckAdd")."','".$cBck->id."');";
+				$action .= "<td class='cBck-".$cBck->id." action ".$cBck->isValideString()."'><a onclick=\"".implode("",$jsactions)."\">".(($cBck->isValide())?"-":"+")."</a></td>";
+
 			}
 			//$action .= "<td>".$c->data["Dossard"]."</td>";
 			

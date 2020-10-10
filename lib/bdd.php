@@ -501,7 +501,7 @@ class CoureurBlock extends classecime
 	{
 		return ($this->data["Status"])?true:false;
 	}	
-	function setValide($b)
+	function setValide($b,$retry=0)
 	{
 		$q = "delete from Resultat_Manche 
 					where Code_evenement = '".$this->ids["Code_evenement"]."'  
@@ -513,7 +513,14 @@ class CoureurBlock extends classecime
 		{
 				$q = "insert into Resultat_Manche (Code_evenement,Code_coureur,Code_manche,Rang,Heure_depart,Status,PtsClt)
 							Values('".$this->ids["Code_evenement"]."','".$this->ids["Code_coureur"]."','".$this->ids["Code_manche"]."',null,0,'O',0)";
-				self::$bdd->query($q);			
+				try {
+					@self::$bdd->query($q);
+				} catch(Exception $e) {
+					if ($retry > 100)
+						die($e->getMessage());
+					// sleep();
+					$this->setValide($b,$retry++);
+				}
 		}
  
 	}

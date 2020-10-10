@@ -147,4 +147,7 @@ th.pts {
 td.btnSaisie {
 	width: 2em;
 }
+th.admin-block-result i{
+	font-size: 2em;
+}
 </style>
