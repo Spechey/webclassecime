@@ -186,16 +186,25 @@ if (isset($_GET["mch"]))
 		
 		
 
-
+		$bm = array();
+		for ($i=0;$i<sizeof($suffixModulo);$i++)
+		{
+			$m = ($i) % $modulo;
+			$bm[] = '<div class="'.$suffixModulo[$m]["class"].'">'.$suffixModulo[$m]["titre"].'</div>';
+		}
+		$bm = array_reverse($bm);
+		$resultTitre = '<div class="bloc-result"><div class="bloc-id">&#160;</div>'.implode("",$bm).'</div>';	
+		$bm = array();
 		
-
 		foreach($mchs->getResultatsByCoureurs() as $c)
 		{
 			
-			$result = "";
+			$result = $resultTitre;
 			reset($bps);
 			foreach($bps as $b => $p)
 			{
+				$m = ($b-1) % $modulo;
+				//echo "<li>$b => ".$m;
 				if (isset($c->data["BlocsInfos"]["Details"]))
 				{
 						$cBck =	new CoureurBlock (array(
@@ -207,14 +216,21 @@ if (isset($_GET["mch"]))
 																"pts"=>((isset($c->data["BlocsInfos"]["Details"][$b]))?$c->data["BlocsInfos"]["Details"][$b]:"-"),
 																"Status"=>((isset($c->data["BlocsInfos"]["Details"][$b]))?"O":false)
 														));	
-														
-					$result .= '<div class="bloc-result"><div class="bloc-id">'.$b.'</div><div class="bloc-top '.(($cBck->isValide())?"bloc-valid":"").'">'.floor($p).'</div></div>';
+
+					$bm[] = '<div class="'.$suffixModulo[$m]["class"].' '.(($cBck->isValide())?"bloc-valid":"").'">'.floor($p).'</div>';
+				}
+				
+				if (($m+1) == $modulo)
+				{
+					$bm = array_reverse($bm);
+					$result .= '<div class="bloc-result"><div class="bloc-id">'.floor($b/$modulo).'</div>'.implode("",$bm).'</div>';	
+					$bm = array();					
 				}
 			}			
 			
 			
 			
-			$scores = "<div class='scores float-right'><div class='points'>".$c->data["BlocsInfos"]["TotalPoints"]."<span>pts</span></div><div class='top'>".$c->data["BlocsInfos"]["TotalBlocs"]."<span>blocs</span></div></div>";
+			$scores = "<div class='scores float-right'><div class='points'>".$c->data["BlocsInfos"]["TotalPoints"]."<span>pts</span></div><div class='top'>".($c->data["BlocsInfos"]["TotalBlocs"] / $modulo)."<span>blocs</span></div></div>";
 			//print_r($c);
 			echo "<li class='list-group-item concurent contest'><div>".$scores."<h1 class='float-left order'>".$c->data["Classement"]."</h1><span class='sexe'>".$c->data["Sexe"]."</span><span class='identity'>".$c->data["Nom"]." ".$c->data["Prenom"]."</span><span class='categ'>".$c->data["Categ"]."</span><span class='club'>".$c->data["Club"]."</span></div><div class='float-none blocs-result'>".$result."</div></li>";
 			

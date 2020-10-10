@@ -24,8 +24,12 @@ classecime::$blocsPoints = 500;
 
 /* gestion des zones*/
 $modulo = 2;
-$suffixModulo[0] = " Top";
-$suffixModulo[1] = " Zone";
+$suffixModulo[1]["titre"]       = " Top";
+$suffixModulo[1]["initial"]     = "T";
+$suffixModulo[1]["class"]       = "bloc-top";
+$suffixModulo[0]["titre"]       = " Zone";
+$suffixModulo[0]["initial"]     = "Z";
+$suffixModulo[0]["class"]       = "bloc-bonus";
 
 
 //saisie par grimpeur
