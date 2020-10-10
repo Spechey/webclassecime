@@ -15,6 +15,7 @@ if (isset($_GET["evs"]))
 {
 	$evs = new Evenement($_GET["evs"]);
 	echo "<h1>".$evs->data["Nom"]."</h1>";
+	//print_r($evs->data);
 }
 
 if (isset($_GET["eps"]))
@@ -143,10 +144,7 @@ if (isset($_GET["mch"]))
 			
 	
 }	
-	
-
-
-
+echo '<div id="president">Président du jury : <b>'.$evs->getPresidentJury().'</b>&#160;&#160;&#160;&#160;&#160;&#160;&#160;-&#160;&#160;&#160;&#160;&#160;&#160;Signature : </div>';
 ?>
 <script type="text/javascript">
 print();

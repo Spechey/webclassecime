@@ -153,4 +153,8 @@ th.admin-block-result i{
 th i, td i{
 	font-size: 1.4em;
 }
+#president {
+	margin: 1em;
+	font-size: 1.4em;
+}
 </style>

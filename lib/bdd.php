@@ -130,6 +130,17 @@ class Evenement extends classecime
 										where Code_evenement = '".$this->ids["Code"]."'
 										order by Dossard","Coureur");		
 	}
+	function getPresidentJury() {
+		$q = "select Info from Epreuve_Reserve
+										where Code_evenement = '".$this->ids["Code"]."'
+										and Code_epreuve = -1";		
+		$rs = self::$bdd->query($q);
+		$e = $rs->fetchArray(SQLITE3_ASSOC);
+		if (isset($e["Info"]))
+			return $e["Info"];
+		else
+			return "";
+	}
 }
 class Epreuve extends classecime
 {
