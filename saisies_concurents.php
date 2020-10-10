@@ -123,13 +123,13 @@ if (isset($c))
 			$m = ($bckId +1) % $modulo;
 			$bn = floor(($bckId+1) / $modulo);
 			
-				@$r[3+(($m+1)*3)] .= "<td class='cBck-".$cBck->id." id ".$cBck->isValideString()."'><i>".$bn."</i>&#160;".$suffixModulo[$m]["initial"]."</td>";
+				@$r[1+(($m+1)*3)] .= "<td class='cBck-".$cBck->id." id ".$cBck->isValideString()."'><i>".$bn."</i>&#160;".$suffixModulo[$m]["initial"]."</td>";
 				@$r[2+(($m+1)*3)] .= "<td class='cBck-".$cBck->id." pts ".$cBck->isValideString()."'>".$cBck->getPts()."pts</td>";
-				@$r[1+(($m+1)*3)] .= "<td class='cBck-".$cBck->id." action ".$cBck->isValideString()."'><a id=\"bm-".$bn.$suffixModulo[$m]["initial"]."\" onclick=\"cBck_update('cBck-".$cBck->id."','".(($cBck->isValide())?"cBckDel":"cBckAdd")."','".$cBck->id."')\" href__='?".http_build_query($_GET)."&action=".(($cBck->isValide())?"cBckDel":"cBckAdd")."&actionid=".$cBck->id."'>".(($cBck->isValide())?"-":"+")."</a></td>";
+				@$r[3+(($m+1)*3)] .= "<td class='cBck-".$cBck->id." action ".$cBck->isValideString()."'><a id=\"bm-".$bn.$suffixModulo[$m]["initial"]."\" onclick=\"cBck_update('cBck-".$cBck->id."','".(($cBck->isValide())?"cBckDel":"cBckAdd")."','".$cBck->id."')\" href__='?".http_build_query($_GET)."&action=".(($cBck->isValide())?"cBckDel":"cBckAdd")."&actionid=".$cBck->id."'>".(($cBck->isValide())?"-":"+")."</a></td>";
 				
 		}			
 		ksort($r);
-		$r = array_reverse($r);
+		//$r = array_reverse($r);
 		echo "<table class=bck><tr>".implode("</tr><tr>",$r)."</tr></table>";
 
 	}
