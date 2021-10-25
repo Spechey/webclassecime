@@ -37,13 +37,31 @@ function dossard(event)
 function setbloc(event)
 {
 	$("#bloc").val($("#bloc").val().replace(".",""))
+	console.log(event.keyCode );
 	if (event.keyCode == 13 ||  event.keyCode == 46) // caratére return
 	{
 		<?php if (isset($c)) { ?>
-		var bloc = ($("#bloc").val()*1) + ($("#mch").val() * 1000);
-		var blocId = "<?=@$c->id?>-"+bloc;
-		cBck_update("cBck-"+blocId,'cBckAdd',blocId);
-		$("#bloc").val("");
+		if (Number.isInteger($("#bloc").val()))
+		{
+			var bloc = ($("#bloc").val()*1) + ($("#mch").val() * 1000);
+			var blocId = "<?=@$c->id?>-"+bloc;
+			cBck_update("cBck-"+blocId,'cBckAdd',blocId);
+			$("#bloc").val("");
+		}
+		else
+		{
+			var s=$("#bloc").val().toUpperCase(), 
+			    a = $("#bm-"+s);
+			if (a) {
+				a.click();
+				if (s.endsWith('<?=$suffixModulo[1]["initial"]?>')) {
+					s = s.replace('<?=$suffixModulo[1]["initial"]?>','<?=$suffixModulo[0]["initial"]?>');
+					a = $("#bm-"+s);
+					a.click();
+				}
+			}
+			$("#bloc").val("");
+		}
 		event.keyCode = 13;
 		<?php } ?>
 		
@@ -98,15 +116,21 @@ if (isset($c))
 		echo "<h2>Manche ".$rm->data["Code_manche"]."</h2>";
 		// var_dump($rm);
 		$rs = $c->getResultat($rm->data["Code_manche"]);
-		$r0 = $r1 = $r2 = "";
+		$r = array();
 
 		foreach($rs as $bckId => $cBck)
 		{
-			$r0 .= "<td class='cBck-".$cBck->id." id ".$cBck->isValideString()."'>".$bckId."</td>";
-			$r1 .= "<td class='cBck-".$cBck->id." pts ".$cBck->isValideString()."'>".$cBck->getPts()."pts</td>";
-			$r2 .= "<td class='cBck-".$cBck->id." action ".$cBck->isValideString()."'><a onclick=\"cBck_update('cBck-".$cBck->id."','".(($cBck->isValide())?"cBckDel":"cBckAdd")."','".$cBck->id."')\" href__='?".http_build_query($_GET)."&action=".(($cBck->isValide())?"cBckDel":"cBckAdd")."&actionid=".$cBck->id."'>".(($cBck->isValide())?"-":"+")."</a></td>";
+			$m = ($bckId +1) % $modulo;
+			$bn = floor(($bckId+1) / $modulo);
+			
+				@$r[1+(($m+1)*3)] .= "<td class='cBck-".$cBck->id." id ".$cBck->isValideString()."'><i>".$bn."</i>&#160;".$suffixModulo[$m]["initial"]."</td>";
+				@$r[2+(($m+1)*3)] .= "<td class='cBck-".$cBck->id." pts ".$cBck->isValideString()."'>".$cBck->getPts()."pts</td>";
+				@$r[3+(($m+1)*3)] .= "<td class='cBck-".$cBck->id." action ".$cBck->isValideString()."'><a id=\"bm-".$bn.$suffixModulo[$m]["initial"]."\" onclick=\"cBck_update('cBck-".$cBck->id."','".(($cBck->isValide())?"cBckDel":"cBckAdd")."','".$cBck->id."')\" href__='?".http_build_query($_GET)."&action=".(($cBck->isValide())?"cBckDel":"cBckAdd")."&actionid=".$cBck->id."'>".(($cBck->isValide())?"-":"+")."</a></td>";
+				
 		}			
-		echo "<table class=bck><tr>$r0</tr><tr>$r1</tr><tr>$r2</tr></table>";
+		ksort($r);
+		//$r = array_reverse($r);
+		echo "<table class=bck><tr>".implode("</tr><tr>",$r)."</tr></table>";
 
 	}
 	

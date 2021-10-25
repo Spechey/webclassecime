@@ -105,7 +105,7 @@ table.bck {
 table.bck td {
 	border: none;
     
-    width: 30px;
+    width: 40px;
 }
 
 table.bck .id{
@@ -143,5 +143,18 @@ th.pts {
 	font-weight : normal;
 	font-size: small;
 	background-color: #EEF;
+}
+td.btnSaisie {
+	width: 2em;
+}
+th.admin-block-result i{
+	font-size: 2em;
+}
+th i, td i{
+	font-size: 1.4em;
+}
+#president {
+	margin: 1em;
+	font-size: 1.4em;
 }
 </style>

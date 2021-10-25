@@ -14,7 +14,7 @@ include_once("../lib/conf.php");
 	<script   src="../js/jquery-3.4.1.min.js"></script>	
 	<script src="../bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-
+		setTimeout(function(){ window.location.reload() }, <?=$liveRefreshseconde*1000?>);
 	</script>
 	
 </head>
@@ -88,17 +88,38 @@ include_once("../lib/conf.php");
 			Filtres
 		</button>
 		<div class="dropdown-menu" aria-labelledby="navbarDropdown"><?php	
-				echo '<a class="dropdown-item" href="?evs='.$_GET["evs"]."&eps=".$_GET["eps"]."&mch=".$mchs->id.'" id="navbarDropdown" role="button">Supprimer le filtre</a>';				
-		$filters = $mchs->getFiltersValues();
+				echo '<a class="dropdown-item" href="?evs='.$_GET["evs"]."&eps=".$_GET["eps"]."&mch=".$mchs->id.'" id="navbarDropdown" role="button">Supprimer le(s) filtre(s)</a>';				
+		$filters = $mchs->getFiltersValues($liveFilterValues);
 		foreach($filters as $filter_name => $filter_values)
 		{
+			
+
+			$filterOtherParams="";
+			if (isset($_GET["filter"]))
+			{
+				reset($_GET["filter"]);
+				foreach($_GET["filter"] as $name => $value)
+				{
+					if ($name != $filter_name)
+						$filterOtherParams .= "&filter[".$name."]=".urlencode($value);
+				}
+			}
+			
+			
 			echo "<p class=\"btn-warning\">$filter_name</p>";
 			for($i=0;$i<sizeof($filter_values);$i++)
 			{
 				if ($filter_values[$i] == null)
 					$filter_values[$i] = "";
+				$isSelected = (isset($_GET["filter"]) 
+								&& isset($_GET["filter"][$filter_name]) 
+								&& $_GET["filter"][$filter_name] == $filter_values[$i]);
 
-				echo '<a class="dropdown-item" href="?evs='.$_GET["evs"]."&eps=".$_GET["eps"]."&mch=".$mchs->id."&filterName=".$filter_name."&filterValue=".urlencode($filter_values[$i]).'" id="navbarDropdown" role="button">'.(($filter_values[$i])?$filter_values[$i]:"[sans indication]").' </a>';				
+				$filterParams = $filterOtherParams;
+				if (!$isSelected)
+					$filterParams .= "&filter[".$filter_name."]=".urlencode($filter_values[$i]);
+
+				echo '<a class="dropdown-item '.(($isSelected)?"active":"").'" href="?evs='.$_GET["evs"]."&eps=".$_GET["eps"]."&mch=".$mchs->id.$filterParams.'" id="navbarDropdown" role="button">'.(($filter_values[$i])?(($filter_values[$i]=="*")?"[Toutes mentions]":$filter_values[$i]):"[Sans mention]").' </a>';				
 			}
 		}	
 	?></div></div><?php } ?>
@@ -117,19 +138,33 @@ include_once("../lib/conf.php");
 <?php if (isset($_GET["mch"])) { ?>
 <div id="header">
 <h1><?=(new Evenement($_GET["evs"]))->data["Nom"] ?></h1>
-<h2><?php 
+<?php 
 $ep = new Epreuve($_GET["eps"]);
-echo (($ep->data["Code_categorie"] == "*")?"Scratch":$ep->data["Code_categorie"]).' ('.(($ep->data["Sexe"]=="T")?"Mixte":$ep->data["Sexe"]).")";
-
-if (isset($_GET["filterName"]) && isset($_GET["filterValue"]))
+$t = (($ep->data["Code_categorie"] == "*")?"":$ep->data["Code_categorie"]).' '.(($ep->data["Sexe"]=="T")?"":"(".$ep->data["Sexe"].")");
+if (trim($t) != "")
+	echo "<h2>$t</h2>";
+?>
+<?php
+if (isset($_GET["filter"]))
 {
-	echo '</h2><h2><button class="btn btn-warning"><b>Filtre</b> '.$_GET["filterName"]." : ".$_GET["filterValue"]."</button></h2>";
+	echo "<h2>";
+	reset($_GET["filter"]);
+	foreach($_GET["filter"] as $name => $value)
+	{	
+		$filterOtherParams="";
+		foreach($_GET["filter"] as $name2 => $value2)
+		{
+			if ($name2 != $name)
+				$filterOtherParams .= "&filter[".$name2."]=".urlencode($value2);
+		}
+		echo '<a class="btn btn-warning" href="?evs='.$_GET["evs"]."&eps=".$_GET["eps"]."&mch=".$mchs->id.$filterOtherParams.'">&#10060; '.$name." : ".$value."</a>&#160;";
+	}
+	echo "</h2>";
 }
 
 ?>
 
-</h2>
-<div id="message"><b>Résultats et scores à titre informatif !!</b></div>
+<div id="message"><b>Résultats et scores à titre informatif.</b></div>
 </div>
  <div class="container list-group">
 <?php
@@ -138,26 +173,39 @@ if (isset($_GET["filterName"]) && isset($_GET["filterValue"]))
 if (isset($_GET["mch"]))
 {
 		$mchs = new Manche($_GET["mch"]);
-		$bps = $mchs->getPointsBlocs();
-		if (isset($_GET["filterName"]) && isset($_GET["filterValue"]))
+		
+		if (isset($_GET["filter"]))
 		{
-			$mchs->addFilter($_GET["filterName"],$_GET["filterValue"]);
+			reset($_GET["filter"]);
+			foreach($_GET["filter"] as $name => $value)
+			{
+				$mchs->addFilter($name,$value);
+			}
 		}
-
+		$bps = $mchs->getPointsBlocs();
 		
 		
+
+		$bm = array();
+		for ($i=0;$i<sizeof($suffixModulo);$i++)
+		{
+			$m = ($i) % $modulo;
+			$bm[] = '<div class="'.$suffixModulo[$m]["class"].'">'.$suffixModulo[$m]["titre"].'</div>';
+		}
+		$bm = array_reverse($bm);
+		$resultTitre = '<div class="bloc-result"><div class="bloc-id">&#160;</div>'.implode("",$bm).'</div>';	
+		$bm = array();
 		
-
-
-		
-
 		foreach($mchs->getResultatsByCoureurs() as $c)
 		{
 			
-			$result = "";
+			$result = $resultTitre;
 			reset($bps);
 			foreach($bps as $b => $p)
 			{
+				// gestion modulo
+				$m = ($b-1) % $modulo;
+				//echo "<li>$b => ".$m;
 				if (isset($c->data["BlocsInfos"]["Details"]))
 				{
 						$cBck =	new CoureurBlock (array(
@@ -169,14 +217,21 @@ if (isset($_GET["mch"]))
 																"pts"=>((isset($c->data["BlocsInfos"]["Details"][$b]))?$c->data["BlocsInfos"]["Details"][$b]:"-"),
 																"Status"=>((isset($c->data["BlocsInfos"]["Details"][$b]))?"O":false)
 														));	
-														
-					$result .= '<div class="bloc-result"><div class="bloc-id">'.$b.'</div><div class="bloc-top '.(($cBck->isValide())?"bloc-valid":"").'">'.floor($p).'</div></div>';
+
+					$bm[] = '<div class="'.$suffixModulo[$m]["class"].' '.(($cBck->isValide())?"bloc-valid":"").'">'.floor($p).'</div>';
+				}
+				
+				if (($m+1) == $modulo)
+				{
+					$bm = array_reverse($bm);
+					$result .= '<div class="bloc-result"><div class="bloc-id">'.floor($b/$modulo).'</div>'.implode("",$bm).'</div>';	
+					$bm = array();					
 				}
 			}			
 			
 			
 			
-			$scores = "<div class='scores float-right'><div class='points'>".$c->data["BlocsInfos"]["TotalPoints"]."<span>pts</span></div><div class='top'>".$c->data["BlocsInfos"]["TotalBlocs"]."<span>blocs</span></div></div>";
+			$scores = "<div class='scores float-right'><div class='points'>".$c->data["BlocsInfos"]["TotalPoints"]."<span>pts</span></div><div class='top'>".($c->data["BlocsInfos"]["TotalBlocs"] / $modulo)."<span>blocs</span></div></div>";
 			//print_r($c);
 			echo "<li class='list-group-item concurent contest'><div>".$scores."<h1 class='float-left order'>".$c->data["Classement"]."</h1><span class='sexe'>".$c->data["Sexe"]."</span><span class='identity'>".$c->data["Nom"]." ".$c->data["Prenom"]."</span><span class='categ'>".$c->data["Categ"]."</span><span class='club'>".$c->data["Club"]."</span></div><div class='float-none blocs-result'>".$result."</div></li>";
 			

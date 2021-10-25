@@ -21,3 +21,15 @@ function helpers_tableLine($datas,$cols=array(),$balise="td",$ext="")
 	$r .= $ext."</tr>";
 	return $r;
 }
+
+function helpers_tableCels($datas,$cols=array(),$balise="td",$ext="")
+{
+	$r="";
+	if (sizeof($cols) == 0)
+		$cols = array_keys($datas);
+	for ($i=0;$i<sizeof($cols);$i++)
+	{
+		$r .= "<".$balise." ".$ext.">".$datas[$cols[$i]]."</".$balise.">";
+	}
+	return $r;
+}
