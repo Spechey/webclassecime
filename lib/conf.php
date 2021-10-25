@@ -21,16 +21,20 @@ $cc = new classecime();
 // faire recalculer les points en foonction des filtres (oui : true, non: false)
 classecime::$FiltresRecalculPoints = true;
 // point par blocs
-classecime::$blocsPoints = 500;
+classecime::$blocsPoints = 1000;
 
-/* gestion des zones*/
-$modulo = 2;
-$suffixModulo[1]["titre"]       = "Top";
-$suffixModulo[1]["initial"]     = "T";
-$suffixModulo[1]["class"]       = "bloc-top";
-$suffixModulo[0]["titre"]       = "Bonus";
-$suffixModulo[0]["initial"]     = "B";
-$suffixModulo[0]["class"]       = "bloc-bonus";
+/* gestion des zones
+2 => zones
+1 => sans zones
+*/ 
+
+$modulo = 1;
+$suffixModulo[0]["titre"]       = "Top";
+$suffixModulo[0]["initial"]     = "T";
+$suffixModulo[0]["class"]       = "bloc-top";
+$suffixModulo[1]["titre"]       = "Bonus";
+$suffixModulo[1]["initial"]     = "B";
+$suffixModulo[1]["class"]       = "bloc-bonus";
 
 
 //saisie par grimpeur

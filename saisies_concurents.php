@@ -117,11 +117,11 @@ if (isset($c))
 		// var_dump($rm);
 		$rs = $c->getResultat($rm->data["Code_manche"]);
 		$r = array();
-
+		//var_dump($rs);
 		foreach($rs as $bckId => $cBck)
 		{
-			$m = ($bckId +1) % $modulo;
-			$bn = floor(($bckId+1) / $modulo);
+			$m = ($bckId) % $modulo;
+			$bn = floor(($bckId) / $modulo);
 			
 				@$r[1+(($m+1)*3)] .= "<td class='cBck-".$cBck->id." id ".$cBck->isValideString()."'><i>".$bn."</i>&#160;".$suffixModulo[$m]["initial"]."</td>";
 				@$r[2+(($m+1)*3)] .= "<td class='cBck-".$cBck->id." pts ".$cBck->isValideString()."'>".$cBck->getPts()."pts</td>";

@@ -123,8 +123,8 @@ if (isset($_GET["mch"]))
 		$l2 = "";
 		foreach($bps as $b => $p)
 		{
-			$m = ($b + 1) % $modulo;
-			$bn = floor(($b + 1) / 2);
+			$m = ($b) % $modulo;
+			$bn = floor(($b) / $modulo);
 			$l1 .=  "<th class=admin-block-result>n°&#160;<i>$bn</i><br/>".$suffixModulo[$m]["titre"]."</th>";
 			$l2 .=  "<th class='pts'>$p pts</th>";
 			

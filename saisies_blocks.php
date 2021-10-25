@@ -44,7 +44,7 @@ if (isset($_GET["mch"]) && isset($_GET["block"]))
 			for ($j=($modulo-1);$j>=0;$j--)
 			//for ($j=0;$j<$modulo;$j++)
 			{
-				$nbloc = $b_init[$i] * 2 - $j;
+				$nbloc = $b_init[$i] * $modulo - $j;
 				$b[]      = $nbloc;
 				$titres[] = "<i>".$b_init[$i]."</i>\n".$suffixModulo[($modulo-1-$j)]["titre"]."\n($nbloc)";
 			}
@@ -92,7 +92,7 @@ if (isset($_GET["mch"]) && isset($_GET["block"]))
 				
 				$cBck = $cBckList[$b[$i]];
 				
-				$m = ($b[$i]+1) % $modulo;
+				$m = ($b[$i]) % $modulo;
 				//if ($m==0)
 					$jsactions = array();				
 				$jsactions[] = "cBck_update('cBck-".$cBck->id."','".(($cBck->isValide())?"cBckDel":"cBckAdd")."','".$cBck->id."');";
