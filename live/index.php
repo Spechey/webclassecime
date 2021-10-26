@@ -36,8 +36,7 @@ include_once("../lib/conf.php");
 			foreach($GLOBALS["cc"]->getEvenements() as $evs)
 			{
 					$evs = new Evenement($evs->id);
-					echo "<p class=\"btn-primary\">".$evs->data["Nom"]."<p>";
-				
+					echo "<p class=\"btn-primary\">".$evs->data[$titreEvenement]."<p>";
 					$epss = $evs->getEpreuves();
 					foreach($epss as $eps)
 					{
@@ -174,6 +173,7 @@ if (isset($_GET["mch"]))
 {
 		$mchs = new Manche($_GET["mch"]);
 		
+		
 		if (isset($_GET["filter"]))
 		{
 			reset($_GET["filter"]);
@@ -184,7 +184,7 @@ if (isset($_GET["mch"]))
 		}
 		$bps = $mchs->getPointsBlocs();
 		
-		
+	
 
 		$bm = array();
 		for ($i=0;$i<sizeof($suffixModulo);$i++)
@@ -196,9 +196,11 @@ if (isset($_GET["mch"]))
 		$resultTitre = '<div class="bloc-result"><div class="bloc-id">&#160;</div>'.implode("",$bm).'</div>';	
 		$bm = array();
 		
-		foreach($mchs->getResultatsByCoureurs() as $c)
+		$byc = $mchs->getResultatsByCoureurs();
+		
+		echo '<div class="list-group-item concurent contest" style="text-align:right;"><b>'.sizeof($byc).' grimpeurs</b></div>';
+		foreach($byc as $c)
 		{
-			
 			$result = $resultTitre;
 			reset($bps);
 			foreach($bps as $b => $p)

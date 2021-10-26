@@ -6,7 +6,7 @@ function helpers_listEpreuves()
 		//var_dump($evs);
 		$class = (isset($GLOBALS["_GET"]["evs"]) && $GLOBALS["_GET"]["evs"] == $evs->id)?"active":"inactive";
 		
-		echo "<li class='".$class."'><a href='?evs=".$evs->id."'>".$evs->data["Nom"]."</a></li>";
+		echo "<li class='".$class."'><a href='?evs=".$evs->id."'>".$evs->data[$GLOBALS["titreEvenement"]]."</a></li>";
 	}
 }
 function helpers_tableLine($datas,$cols=array(),$balise="td",$ext="")

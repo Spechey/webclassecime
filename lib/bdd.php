@@ -216,7 +216,13 @@ class Manche extends classecime
 	{
 		$filter = "";
 		if ($this->Epreuve->data["Code_categorie"] != '*')
-			$filter .= " AND Resultat.Categ = '".$this->Epreuve->data["Code_categorie"]."'";
+		{
+			// on recupére le code de la catégogie a partir du libelle
+			if (isset($GLOBALS["codesCaterogies"][$this->Epreuve->data["Code_categorie"]]))
+			{
+				$filter .= " AND Resultat.Categ = '".$GLOBALS["codesCaterogies"][$this->Epreuve->data["Code_categorie"]]."'";
+			}
+		}
 		if ($this->Epreuve->data["Sexe"] != 'T')
 			$filter .= " AND Resultat.Sexe = '".$this->Epreuve->data["Sexe"]."'";
 		if (isset($this->Epreuve->data["Distance"]) && $this->Epreuve->data["Distance"] != null)
@@ -256,7 +262,9 @@ class Manche extends classecime
 		
 		
 		$byC = $this->getObj($q,"Resultat");
-				
+		
+		// var_dump($q);
+		
 		$return = array();
 		foreach($byC as $e)
 		{

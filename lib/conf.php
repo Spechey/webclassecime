@@ -20,8 +20,6 @@ $cc = new classecime();
 
 // faire recalculer les points en foonction des filtres (oui : true, non: false)
 classecime::$FiltresRecalculPoints = true;
-// point par blocs
-classecime::$blocsPoints = 1000;
 
 /* gestion des zones
 2 => zones
@@ -32,10 +30,17 @@ $modulo = 1;
 $suffixModulo[0]["titre"]       = "Top";
 $suffixModulo[0]["initial"]     = "T";
 $suffixModulo[0]["class"]       = "bloc-top";
-$suffixModulo[1]["titre"]       = "Bonus";
-$suffixModulo[1]["initial"]     = "B";
-$suffixModulo[1]["class"]       = "bloc-bonus";
+if ($modulo > 1) { 
+	$suffixModulo[1]["titre"]       = "Bonus";
+	$suffixModulo[1]["initial"]     = "B";
+	$suffixModulo[1]["class"]       = "bloc-bonus";
+}
 
+// point par blocs
+classecime::$blocsPoints = floor(1000 / $modulo);
+
+
+$titreEvenement = "Commentaire";
 
 //saisie par grimpeur
 $coureurResultHeaders = array(
@@ -95,13 +100,38 @@ $coureurListByBlocHeaders = array(
 	);	
 	
 	
-$liveFilterValues = array("Categ","Sexe","Club","Dept","Ligue");
+$liveFilterValues =  array(
+		// "Categ", // une epreuve par categogie et pas toutes dans une categorie
+		"Sexe",
+		"Club",
+		"Dept",
+		"Ligue");
 $saisieFilterValues = array("Categ","Sexe","Club","Dept","Ligue","Certificat_Medical");
+
 
 $liveRefreshseconde=30;
 
-
 $login = "rtg";
 $password = "rtg";
+
+
+/********************************************/
+/* ne pas modifier ! ce qu'il y a dessous ! */
+/********************************************/
+
+$codesCaterogies = array( // présent dans la base, mais ça fait gagner du temps de l'avoir en static ici
+	"U8"       => "U8",
+	"MICROBE"  => "U10",
+	"POUSSIN"  => "U12",
+	"BENJAMIN" => "U14",
+	"MINIME"   => "U16",
+	"CADET"    => "U18",
+	"JUNIOR"   => "U20",	
+	"SENIOR"   => "SENIOR",
+	"VETERAN"  => "VETERAN",
+	"ADULTE"   => "ADU",
+	"Toutes les Catégories"  => "*"
+);
+
 include_once("helpers.php");
-include_once("actions.php");	
+include_once("actions.php");
