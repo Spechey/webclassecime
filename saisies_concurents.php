@@ -40,7 +40,7 @@ function setbloc(event)
 	console.log(event.keyCode );
 	if (event.keyCode == 13 ||  event.keyCode == 46) // caratére return
 	{
-		<?php if (isset($c)) { ?>
+		<?php if (@isset($c)) { ?>
 		if (Number.isInteger($("#bloc").val()))
 		{
 			var bloc = ($("#bloc").val()*1) + ($("#mch").val() * 1000);
@@ -54,11 +54,13 @@ function setbloc(event)
 			    a = $("#bm-"+s);
 			if (a) {
 				a.click();
-				if (s.endsWith('<?=$suffixModulo[1]["initial"]?>')) {
-					s = s.replace('<?=$suffixModulo[1]["initial"]?>','<?=$suffixModulo[0]["initial"]?>');
+				<?php if (@isset($suffixModulo[1]["initial"])) { ?>
+				if (s.endsWith('<?=@$suffixModulo[1]["initial"]?>')) {
+					s = s.replace('<?=@$suffixModulo[1]["initial"]?>','<?=@$suffixModulo[0]["initial"]?>');
 					a = $("#bm-"+s);
 					a.click();
 				}
+				<?php } ?>
 			}
 			$("#bloc").val("");
 		}
