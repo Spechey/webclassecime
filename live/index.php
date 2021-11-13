@@ -163,7 +163,7 @@ if (isset($_GET["filter"]))
 
 ?>
 
-<div id="message"><b>Résultats et scores à titre informatif.</b></div>
+<div id="message"><b><?=$message?></b></div>
 </div>
  <div class="container list-group">
 <?php

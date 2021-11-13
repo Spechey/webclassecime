@@ -12,6 +12,13 @@
 <a href="saisies_concurents.php" target="saisies_concurents">Saisies fiches concurents</a>
 <br/>
 <a href="saisies_blocks.php" target="saisies_blocks">Saisies fiches blocks</a>
+
+<br/>
+<a href="print_resultats_podium.php" target="saisies_blocks">Impression Podiums</a>
+
+<br/>
+<a href="print_resultats_all.php" target="saisies_blocks">Impression Resultats</a>
+
 <?php
 //$i = exec("ipconfig");
 $localIP = getHostByName(getHostName());

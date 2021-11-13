@@ -1,4 +1,9 @@
 <?php
+// $message="Résultats et scores à titre informatif.<br/>Aucune saisie pour le moment.";
+
+$message="Résultats Vague 3";
+
+
 include_once("bdd.php");
 
 // fichier de demo
@@ -101,12 +106,17 @@ $coureurListByBlocHeaders = array(
 	
 	
 $liveFilterValues =  array(
-		// "Categ", // une epreuve par categogie et pas toutes dans une categorie
+		"Categ", // une epreuve par categogie et pas toutes dans une categorie
 		"Sexe",
-		"Club",
+		"Club", // juste le filtre
 		"Dept",
 		"Ligue");
-$saisieFilterValues = array("Categ","Sexe","Club","Dept","Ligue","Certificat_Medical");
+$saisieFilterValues = array("Categ",
+							"Sexe",
+							"Club",
+							"Dept",
+							"Ligue",
+							"Certificat_Medical");
 
 
 $liveRefreshseconde=30;
@@ -119,7 +129,7 @@ $password = "rtg";
 /* ne pas modifier ! ce qu'il y a dessous ! */
 /********************************************/
 
-$codesCaterogies = array( // prÃ©sent dans la base, mais Ã§a fait gagner du temps de l'avoir en static ici
+$codesCaterogies = array( // présent dans la base, mais ça fait gagner du temps de l'avoir en static ici
 	"U8"       => "U8",
 	"MICROBE"  => "U10",
 	"POUSSIN"  => "U12",
@@ -130,7 +140,7 @@ $codesCaterogies = array( // prÃ©sent dans la base, mais Ã§a fait gagner du temp
 	"SENIOR"   => "SENIOR",
 	"VETERAN"  => "VETERAN",
 	"ADULTE"   => "ADU",
-	"Toutes les CatÃ©gories"  => "*"
+	"Toutes les Catégories"  => "*"
 );
 
 include_once("helpers.php");
