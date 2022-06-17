@@ -19,7 +19,7 @@ $printBlock=false;
 
 function printRes($evs,$mch,$filter,$printBlock) {
 	
-		$mchs = new Manche($mch);
+	    $mchs = new Manche($mch);
 		$h2 = array();
 		if (isset($filter["filter"]))
 		{
@@ -32,16 +32,19 @@ function printRes($evs,$mch,$filter,$printBlock) {
 					$h2[] = $value;
 				}
 			}
-		}	
-		echo "<h2>".implode($h2," - ")."</h2>";
-	
+		}
 		$bps = $mchs->getPointsBlocs();
+		$cs  = $mchs->getResultatsByCoureurs();
+		//if (sizeof($cs) <= 0)
+		//	return;
+		
+		echo "<h2>".implode($h2," - ")."</h2>";
 
 		echo "<table class=resultats>";
 		echo "<tr>";
 		
 		
-		$cs = $mchs->getResultatsByCoureurs();
+		
 		if (!isset($coureurResultPrintHeaders) || sizeof($coureurResultPrintHeaders) == 0)
 		{
 				$coureurResultPrintHeaders = @array_keys($cs[0]->data);
@@ -77,9 +80,11 @@ function printRes($evs,$mch,$filter,$printBlock) {
 		
 		
 		//print_r($mchs->getResultats());
-		if (1)
+		$nb = 0;
 		foreach($cs as $c)
 		{
+			if ($nb++ > $_GET["max"])
+				continue;
 
 			
 			echo "<tr>";
@@ -144,38 +149,42 @@ echo '<div id="president">Président du jury : <b>'.$evs->getPresidentJury().'</b
 }
 
 
+function printResRec($evs,$mch,$groupBys,$printBlock,$filterP=null) {
+	if ($filterP === null) {
+		$filterP = array();
+		$filterP["filter"] = array();
+	}
+	
+	$key =  (key($groupBys));
+	$groupBy = array_shift($groupBys);
+	foreach ($groupBy as $value){
+		if ($value === "*")
+			continue;
+		if (is_array($GLOBALS["printAllFilterValues"][$key]) && !array_search($value,$GLOBALS["printAllFilterValues"][$key]))
+			continue;
+		$filterP["filter"][$key] = $value;
+		//print_r($filterP);
+		printRes($evs,$mch,$filterP,$printBlock);
+		if (sizeof($groupBys) > 0) {
+			printResRec($evs,$mch,$groupBys,$printBlock,$filterP);
+		}
+		
+	}
+}
 
 
-$evs = '71';
-$eps = '71-1';
-$mch = '71-1-1';
 
+$evs = $_GET["evs"];
+$eps = $_GET["eps"];
+$mch = $_GET["mch"];
+if (!isset($_GET["max"])) { $_GET["max"] = 10000; }
 
 
 $evs = new Evenement($evs);
-foreach (array('SENIOR','VETERAN') as $categ){
+$mchs = new Manche($mch);
+$groupBys = $mchs->getFiltersValues(array_keys($printAllFilterValues));
 
-		$filter = array();
-		$filter["filter"] = array();
-		$filter["filter"]['categ'] = $categ;
-		unset($filter["filter"]['dept']);
-		unset($filter["filter"]['sexe']);		
-  	    printRes($evs,$mch,$filter,$printBlock);
-		 
-		foreach (array('F','M') as $sexe){
-				$filter["filter"]['sexe'] = $sexe;
-				unset($filter["filter"]['dept']);
-				printRes($evs,$mch,$filter,$printBlock);
-				
-				foreach (array('071','021') as $dep){
-					$filter["filter"]['dept'] = $dep;
-					printRes($evs,$mch,$filter,$printBlock);
-				}
-				
-				
-		} // fin sexe
-		 
-} // fin categ
+printResRec($evs,$mch,$groupBys,$printBlock);
 
 
 ?>

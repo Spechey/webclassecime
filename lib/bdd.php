@@ -171,7 +171,6 @@ class Manche extends classecime
 	function addFilter($k,$v)
 	{
 		$this->filters[] = array("name"=>addslashes ($k), "value"=>addslashes ($v)); 
-		
 	}
 	function getFiltersValues($names=array("Categ","Sexe","Club","Dept","Ligue","Certificat_Medical"))
 	{
@@ -337,6 +336,15 @@ class Manche extends classecime
 	function getPointsBlocs($filter=true)
 	{
 		$pointsBlocs = array();
+		// cas ou il y rien de saisi
+		if (!isset($this->data["Code_niveau"])) {
+			for ($i=1;$i<=$this->getNbVoies();$i++) {
+				$pointsBlocs[$i] = classecime::$blocsPoints;
+			}
+			ksort($pointsBlocs);
+			return $pointsBlocs;
+		}
+		
 		
 		$filter = ($filter && classecime::$FiltresRecalculPoints)?$this->getSqlFilter():"";
 		$q = "select (Resultat_Manche.Code_manche - ".$this->data["Code_niveau"]."000) as Bloc, ROUND(CAST(".classecime::$blocsPoints." AS float) / CAST (count(*) AS float),2)  as Points 

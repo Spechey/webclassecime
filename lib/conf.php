@@ -117,7 +117,11 @@ $saisieFilterValues = array("Categ",
 							"Dept",
 							"Ligue",
 							"Certificat_Medical");
-
+$printAllFilterValues = array(
+		"Categ" =>true, // une epreuve par categogie et pas toutes dans une categorie
+		"Sexe"  =>true,
+		// "Dept"  => array("001","021","071"),
+	);
 
 $liveRefreshseconde=30;
 

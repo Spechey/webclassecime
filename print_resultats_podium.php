@@ -144,9 +144,9 @@ function printRes($evs,$mch,$filter,$printBlock) {
 
 
 
-$evs = '71';
-$eps = '71-1';
-$mch = '71-1-1';
+$evs = $_GET["evs"];
+$eps = $_GET["eps"];
+$mch = $_GET["mch"];
 
 $evs = new Evenement($evs);
 foreach (array('SENIOR','VETERAN') as $categ){
